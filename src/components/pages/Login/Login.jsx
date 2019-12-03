@@ -28,7 +28,7 @@ class Login extends Component {
 
       localStorage.setItem("loggedUser", token);
       authenticateUser();
-      history.push("/teste");
+      history.push("/");
     }
   };
 

@@ -3,7 +3,7 @@ export default async config => {
 
   if (token) {
     const tokenJson = JSON.parse(token);
-    config.headers.Authorization = `Beare ${tokenJson.token}`;
+    config.headers.Authorization = `Bearer ${tokenJson.token}`;
   }
 
   return config;

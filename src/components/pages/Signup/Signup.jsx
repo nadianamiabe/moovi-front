@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import "./Signup.css";
 import api from "../../../api/api";
 
 class Signup extends Component {
@@ -29,6 +30,8 @@ class Signup extends Component {
         password: "",
         email: ""
       });
+      console.log(this.props.history);
+
       this.props.history.push("/login");
     }
   };
