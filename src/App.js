@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link, Switch, Route } from "react-router-dom";
 import Signup from "./components/pages/Signup/Signup";
 import Login from "./components/pages/Login/Login";
+import { AllTheaters } from "./components/pages/AllTheaters/AllTheaters";
 import "./App.css";
 
 class App extends Component {
@@ -46,6 +47,8 @@ class App extends Component {
         <Switch>
           <Route exact path="/users/login" component={Login} />
           <Route exact path="/users/signup" component={Signup} />
+          <Route exact path="/all-movie-theaters" component={AllTheaters} />
+
         </Switch>
       </div>
     );
