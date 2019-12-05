@@ -19,7 +19,7 @@ class Signup extends Component {
     e.preventDefault();
 
     const response = await api({
-      url: "http://localhost:5000/users/signup",
+      url: "http://localhost:5000/api/users/signup",
       method: "POST",
       data: this.state
     });

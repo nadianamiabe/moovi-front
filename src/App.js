@@ -3,6 +3,8 @@ import { Link, Switch, Route } from "react-router-dom";
 import Signup from "./components/pages/Signup/Signup";
 import Login from "./components/pages/Login/Login";
 import "./App.css";
+import PrivateRoute from "./routes/PrivateRoutes";
+import Movies from "./components/movies/Movies";
 
 class App extends Component {
   constructor() {
@@ -34,6 +36,7 @@ class App extends Component {
           <div>
             <h1>Estou logado</h1>
             <button onClick={this.logoutUser}>Logout</button>
+            <Link to="/movies/all-movies">Movies</Link>
           </div>
         ) : (
           <div>
@@ -43,9 +46,18 @@ class App extends Component {
           </div>
         )}
 
+        <Movies />
         <Switch>
           <Route exact path="/users/login" component={Login} />
           <Route exact path="/users/signup" component={Signup} />
+          <Route exact path="/movies/all-movies" component={Movies} />
+          <PrivateRoute
+            exact
+            path="/movies/all-movies"
+            component={Movies}
+            isAuth={isUserAuthenticated}
+            teste="banana"
+          />
         </Switch>
       </div>
     );

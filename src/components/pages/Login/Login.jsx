@@ -17,7 +17,7 @@ class Login extends Component {
     e.preventDefault();
 
     const response = await api({
-      url: "http://localhost:5000/users/login",
+      url: "http://localhost:5000/api/users/login",
       method: "POST",
       data: this.state
     });
