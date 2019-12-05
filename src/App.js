@@ -5,6 +5,7 @@ import Login from "./components/pages/Login/Login";
 import { AllTheaters } from "./components/pages/AllTheaters/AllTheaters";
 import "./App.css";
 
+
 class App extends Component {
   constructor() {
     super();
@@ -12,7 +13,7 @@ class App extends Component {
       isUserAuthenticated: false
     };
 
-    const authToken = localStorage.getItem("loggedUser");
+    const authToken = localStorage.getItem('loggedUser');
 
     if (authToken) this.state.isUserAuthenticated = true;
   }
@@ -22,7 +23,7 @@ class App extends Component {
   };
 
   logoutUser = () => {
-    localStorage.removeItem("loggedUser");
+    localStorage.removeItem('loggedUser');
     this.setState({ isUserAuthenticated: false });
   };
 
