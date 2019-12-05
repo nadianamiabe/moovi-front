@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import { Link, Switch, Route } from "react-router-dom";
-import Signup from "./components/pages/Signup/Signup";
-import Login from "./components/pages/Login/Login";
-import "./App.css";
+import React, { Component } from 'react';
+import { Link, Switch, Route } from 'react-router-dom';
+import Signup from './components/pages/Signup/Signup';
+import Login from './components/pages/Login/Login';
+import './App.css';
 
 class App extends Component {
   constructor() {
@@ -11,7 +11,7 @@ class App extends Component {
       isUserAuthenticated: false
     };
 
-    const authToken = localStorage.getItem("loggedUser");
+    const authToken = localStorage.getItem('loggedUser');
 
     if (authToken) this.state.isUserAuthenticated = true;
   }
@@ -21,7 +21,7 @@ class App extends Component {
   };
 
   logoutUser = () => {
-    localStorage.removeItem("loggedUser");
+    localStorage.removeItem('loggedUser');
     this.setState({ isUserAuthenticated: false });
   };
 
