@@ -46,7 +46,7 @@ class App extends Component {
           </div>
         )}
 
-        <Movies />
+        {/* <Movies /> */}
         <Switch>
           <Route
             exact
@@ -56,10 +56,10 @@ class App extends Component {
             )}
           />
           <Route exact path="/users/signup" component={Signup} />
-          <Route exact path="/movies/all-movies" component={Movies} />
+          <Route exact path="/movies/now-playing" component={Movies} />
           <PrivateRoute
             exact
-            path="/movies/all-movies"
+            path="/movies/now-playing"
             component={Movies}
             isAuth={isUserAuthenticated}
             teste="banana"

@@ -9,7 +9,7 @@ class Movies extends Component {
   async componentDidMount() {
     console.log("moviessssssss");
     const { data } = await api({
-      url: `http://localhost:5000/api/movies/all-movies`,
+      url: `http://localhost:5000/api/movies/now-playing`,
       method: "GET"
     });
     console.log(data);
@@ -29,8 +29,12 @@ class Movies extends Component {
     });
   };
   render() {
-    const { movies } = this.state;
-    return <div>{this.showMovies(movies)}</div>;
+    const { movies } = this.state; 
+    return (
+      <div>
+        <h1>{this.showMovies(movies)}</h1>
+      </div>
+    );
   }
 }
 
