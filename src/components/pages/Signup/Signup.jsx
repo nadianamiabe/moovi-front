@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
-import './Signup.css';
-import api from '../../../api/api';
+import React, { Component } from "react";
+import "./Signup.css";
+import api from "../../../api/api";
 
 class Signup extends Component {
   state = {
-    username: '',
-    password: '',
-    email: ''
+    username: "",
+    password: "",
+    email: ""
   };
 
   handleChange = e => {
@@ -19,20 +19,20 @@ class Signup extends Component {
     e.preventDefault();
 
     const response = await api({
-      url: 'http://localhost:5000/api/users/signup',
-      method: 'POST',
+      url: "http://localhost:5000/api/users/signup",
+      method: "POST",
       data: this.state
     });
 
     if (response.status === 200) {
       this.setState({
-        username: '',
-        password: '',
-        email: ''
+        username: "",
+        password: "",
+        email: ""
       });
       console.log(this.props.history);
 
-      this.props.history.push('/login');
+      this.props.history.push("/login");
     }
   };
 

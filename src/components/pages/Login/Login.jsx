@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
-import api from '../../../api/api';
+import React, { Component } from "react";
+import api from "../../../api/api";
 
 class Login extends Component {
   state = {
-    username: '',
-    password: ''
+    username: "",
+    password: ""
   };
 
   handleChange = e => {
@@ -17,8 +17,8 @@ class Login extends Component {
     e.preventDefault();
 
     const response = await api({
-      url: 'http://localhost:5000/api/users/login',
-      method: 'POST',
+      url: "http://localhost:5000/api/users/login",
+      method: "POST",
       data: this.state
     });
 
@@ -26,9 +26,9 @@ class Login extends Component {
       const token = JSON.stringify(response.data);
       const { authenticateUser, history } = this.props;
 
-      localStorage.setItem('loggedUser', token);
+      localStorage.setItem("loggedUser", token);
       authenticateUser();
-      history.push('/');
+      history.push("/");
     }
   };
 
