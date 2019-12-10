@@ -6,6 +6,7 @@ import "./App.css";
 import PrivateRoute from "./router/PrivateRoute";
 import Movies from "./components/pages/movies/Movies";
 import MovieDetails from "./components/pages/MovieDetails/MovieDetails";
+import Checkout from './components/pages/Subscription/Checkout';
 
 class App extends Component {
   constructor() {
@@ -58,6 +59,7 @@ class App extends Component {
           />
           <Route exact path="/users/signup" component={Signup} />
           {/* <Route exact path="/movies/now-playing" component={Movies} /> */}
+          <PrivateRoute exact path="/subscribe/:planId" component={Checkout} isAuth={isUserAuthenticated}/>
           <PrivateRoute
             exact
             path="/movies/now-playing"
