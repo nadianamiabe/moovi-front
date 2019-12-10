@@ -3,8 +3,9 @@ import { Link, Switch, Route } from "react-router-dom";
 import Signup from "./components/pages/Signup/Signup";
 import Login from "./components/pages/Login/Login";
 import "./App.css";
-import PrivateRoute from "./routes/PrivateRoutes";
-import Movies from "./components/movies/Movies";
+import PrivateRoute from "./router/PrivateRoute";
+import Movies from "./components/pages/movies/Movies";
+import MovieDetails from "./components/pages/MovieDetails/MovieDetails";
 
 class App extends Component {
   constructor() {
@@ -36,7 +37,7 @@ class App extends Component {
           <div>
             <h1>Estou logado</h1>
             <button onClick={this.logoutUser}>Logout</button>
-            <Link to="/movies/all-movies">Movies</Link>
+            <Link to="/movies/now-playing">Movies</Link>
           </div>
         ) : (
           <div>
@@ -56,13 +57,18 @@ class App extends Component {
             )}
           />
           <Route exact path="/users/signup" component={Signup} />
-          <Route exact path="/movies/now-playing" component={Movies} />
+          {/* <Route exact path="/movies/now-playing" component={Movies} /> */}
           <PrivateRoute
             exact
             path="/movies/now-playing"
             component={Movies}
             isAuth={isUserAuthenticated}
-            teste="banana"
+          />
+          <PrivateRoute
+            exact
+            path="/movies/:id"
+            component={MovieDetails}
+            isAuth={isUserAuthenticated}
           />
         </Switch>
       </div>

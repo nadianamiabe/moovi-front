@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import "./Signup.css";
-import api from "../../../api/api";
-import { Form, Input, Tooltip, Icon, Select, Checkbox, Button } from "antd";
+import React, { Component } from 'react';
+import './Signup.css';
+import api from '../../../api/api';
+import { Form, Input, Tooltip, Icon, Select, Checkbox, Button } from 'antd';
 
 const { Option } = Select;
 
@@ -47,7 +47,7 @@ class RegistrationForm extends Component {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        console.log("Received values of form: ", values);
+        console.log('Received values of form: ', values);
       }
     });
   };
@@ -59,8 +59,8 @@ class RegistrationForm extends Component {
 
   compareToFirstPassword = (rule, value, callback) => {
     const { form } = this.props;
-    if (value && value !== form.getFieldValue("password")) {
-      callback("Two passwords that you enter is inconsistent!");
+    if (value && value !== form.getFieldValue('password')) {
+      callback('Two passwords that you enter is inconsistent!');
     } else {
       callback();
     }
@@ -69,7 +69,7 @@ class RegistrationForm extends Component {
   validateToNextPassword = (rule, value, callback) => {
     const { form } = this.props;
     if (value && this.state.confirmDirty) {
-      form.validateFields(["confirm"], { force: true });
+      form.validateFields(['confirm'], { force: true });
     }
     callback();
   };
@@ -138,8 +138,8 @@ class RegistrationForm extends Component {
         }
       }
     };
-    const prefixSelector = getFieldDecorator("prefix", {
-      initialValue: "55"
+    const prefixSelector = getFieldDecorator('prefix', {
+      initialValue: '55'
     })(
       <Select style={{ width: 70 }}>
         <Option value="55">+55</Option>
@@ -151,25 +151,25 @@ class RegistrationForm extends Component {
       <article class="mw6 center bg-white shadow-5 br3 pa3 pa4-ns mv3 ba b--black-10">
         <Form {...formItemLayout} onSubmit={this.handleSubmit}>
           <Form.Item label="E-mail">
-            {getFieldDecorator("email", {
+            {getFieldDecorator('email', {
               rules: [
                 {
-                  type: "email",
-                  message: "The input is not valid E-mail!"
+                  type: 'email',
+                  message: 'The input is not valid E-mail!'
                 },
                 {
                   required: true,
-                  message: "Please input your E-mail!"
+                  message: 'Please input your E-mail!'
                 }
               ]
             })(<Input />)}
           </Form.Item>
           <Form.Item label="Password" hasFeedback>
-            {getFieldDecorator("password", {
+            {getFieldDecorator('password', {
               rules: [
                 {
                   required: true,
-                  message: "Please input your password!"
+                  message: 'Please input your password!'
                 },
                 {
                   validator: this.validateToNextPassword
@@ -178,11 +178,11 @@ class RegistrationForm extends Component {
             })(<Input.Password />)}
           </Form.Item>
           <Form.Item label="Confirm Password" hasFeedback>
-            {getFieldDecorator("confirm", {
+            {getFieldDecorator('confirm', {
               rules: [
                 {
                   required: true,
-                  message: "Please confirm your password!"
+                  message: 'Please confirm your password!'
                 },
                 {
                   validator: this.compareToFirstPassword
@@ -200,29 +200,29 @@ class RegistrationForm extends Component {
               </span>
             }
           >
-            {getFieldDecorator("nickname", {
+            {getFieldDecorator('nickname', {
               rules: [
                 {
                   required: true,
-                  message: "Please input your nickname!",
+                  message: 'Please input your nickname!',
                   whitespace: true
                 }
               ]
             })(<Input />)}
           </Form.Item>
           <Form.Item label="Phone Number">
-            {getFieldDecorator("phone", {
+            {getFieldDecorator('phone', {
               rules: [
-                { required: true, message: "Please input your phone number!" }
+                { required: true, message: 'Please input your phone number!' }
               ]
             })(
-              <Input addonBefore={prefixSelector} style={{ width: "100%" }} />
+              <Input addonBefore={prefixSelector} style={{ width: '100%' }} />
             )}
           </Form.Item>
 
           <Form.Item {...tailFormItemLayout}>
-            {getFieldDecorator("agreement", {
-              valuePropName: "checked"
+            {getFieldDecorator('agreement', {
+              valuePropName: 'checked'
             })(
               <Checkbox>
                 I have read the <a href="">agreement</a>
@@ -240,6 +240,6 @@ class RegistrationForm extends Component {
   }
 }
 
-const Signup = Form.create({ name: "register" })(RegistrationForm);
+const Signup = Form.create({ name: 'register' })(RegistrationForm);
 
 export default Signup;
