@@ -8,6 +8,8 @@ import Movies from "./components/pages/movies/Movies";
 import MovieDetails from "./components/pages/MovieDetails/MovieDetails";
 import Checkout from './components/pages/Subscription/Checkout';
 import Home from './components/pages/Home/Home';
+import { AllTheaters } from "./components/pages/AllTheaters/AllTheaters";
+
 class App extends Component {
   constructor() {
     super();
@@ -59,6 +61,7 @@ class App extends Component {
             )}
           />
           <Route exact path="/users/signup" component={Signup} />
+          <Route exact path="/all-movie-theaters" component={AllTheaters} />
           {/* <Route exact path="/movies/now-playing" component={Movies} /> */}
           <PrivateRoute exact path="/subscribe/:planId" component={Checkout} isAuth={isUserAuthenticated}/>
           <PrivateRoute
