@@ -10,13 +10,11 @@ class NormalLoginForm extends Component {
 
   handleChange = e => {
     const { name, value } = e.target;
-
     this.setState({ [name]: value });
   };
 
   handleSubmit = async e => {
     e.preventDefault();
-
     this.props.form.validateFields((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values);
@@ -26,7 +24,10 @@ class NormalLoginForm extends Component {
     const response = await api({
       url: 'http://localhost:5000/api/users/login',
       method: 'POST',
-      data: this.state
+      data: {
+        username: this.state.username,
+        password: this.state.password
+      }
     });
 
     if (response.status === 200) {
@@ -56,6 +57,8 @@ class NormalLoginForm extends Component {
                   <Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />
                 }
                 placeholder="Username"
+                name="username"
+                onChange={this.handleChange}
               />
             )}
           </Form.Item>
@@ -71,6 +74,8 @@ class NormalLoginForm extends Component {
                 }
                 type="password"
                 placeholder="Password"
+                name="password"
+                onChange={this.handleChange}
               />
             )}
           </Form.Item>
