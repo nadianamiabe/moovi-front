@@ -13,9 +13,8 @@ class navbar extends Component {
           defaultSelectedKeys={['2']}
           style={{ lineHeight: '64px', float: 'right' }}
         >
-          <Menu.Item key="1">Home</Menu.Item>
-          <Menu.Item key="2">Entrar</Menu.Item>
-          <Menu.Item key="3">Se Cadastre!</Menu.Item>
+          <Menu.Item key="1">Entrar</Menu.Item>
+          <Menu.Item key="2">Se Cadastre!</Menu.Item>
         </Menu>
       </Header>
     );
