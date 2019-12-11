@@ -18,7 +18,6 @@ ReactDOM.render(
       <BrowserRouter>
         <App />
       </BrowserRouter>
-      ,
     </div>
     <Footer style={{ textAlign: 'center' }}>Created by Moovi ©2019</Footer>
   </Layout>,

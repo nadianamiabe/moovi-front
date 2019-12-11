@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import api from '../../../api/api';
-import { Form, Icon, Input, Button, Checkbox } from 'antd';
+import { Form, Icon, Input, Button } from 'antd';
 
 class NormalLoginForm extends Component {
-  state = {
-    username: '',
-    password: ''
-  };
+  // state = {
+  //   username: '',
+  //   password: ''
+  // };
 
   handleChange = e => {
     const { name, value } = e.target;
@@ -41,7 +41,6 @@ class NormalLoginForm extends Component {
   };
 
   render() {
-    // const { username, password } = this.state;
     const { getFieldDecorator } = this.props.form;
     return (
       <article class="mw6 center bg-white shadow-5 br3 pa3 pa4-ns mv3 ba b--black-10">
@@ -80,10 +79,6 @@ class NormalLoginForm extends Component {
             )}
           </Form.Item>
           <Form.Item>
-            {/* {getFieldDecorator('remember', {
-              valuePropName: 'checked',
-              initialValue: true
-            })(<Checkbox>Remember me</Checkbox>)} */}
             <a className="login-form-forgot" href="">
               Forgot password
             </a>
@@ -98,37 +93,10 @@ class NormalLoginForm extends Component {
           </Form.Item>
         </Form>
       </article>
-      // <form onSubmit={e => this.handleSubmit(e)}>
-      //   <div>
-      //     <label>Username</label>
-      //     <input
-      //       type="text"
-      //       name="username"
-      //       placeholder="Username"
-      //       value={username}
-      //       onChange={e => this.handleChange(e)}
-      //     />
-      //   </div>
-      //   <div>
-      //     <label>Password</label>
-      //     <input
-      //       type="password"
-      //       name="password"
-      //       placeholder="Password"
-      //       value={password}
-      //       onChange={e => this.handleChange(e)}
-      //     />
-      //   </div>
-      //   <div>
-      //     <button type="submit">Entrar!</button>
-      //   </div>
-      // </form>
     );
   }
 }
 
 const Login = Form.create({ name: 'normal_login' })(NormalLoginForm);
-
-//ReactDOM.render(<WrappedNormalLoginForm />, mountNode);
 
 export default Login;
