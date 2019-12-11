@@ -7,7 +7,7 @@ import PrivateRoute from "./router/PrivateRoute";
 import Movies from "./components/pages/movies/Movies";
 import MovieDetails from "./components/pages/MovieDetails/MovieDetails";
 import Checkout from './components/pages/Subscription/Checkout';
-
+import Home from './components/pages/Home/Home';
 class App extends Component {
   constructor() {
     super();
@@ -50,6 +50,7 @@ class App extends Component {
 
         {/* <Movies /> */}
         <Switch>
+          <Route exact path ="/" component={Home} />
           <Route
             exact
             path="/users/login"
