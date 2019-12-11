@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import api from "../../../api/api";
+// import api from "../../../api/api";
 import { Card } from "antd";
 import { Link } from "react-router-dom";
 import "./Movies.css";
@@ -14,19 +14,11 @@ class Movies extends Component {
   };
 
   async componentDidMount() {
-    const { data } = await api({
-      url: `http://localhost:5000/api/movies/now-playing`,
-      method: "GET"
-    });
-
-    this.setState({
-      movies: data.movies.slice()
-    });
+    const { movies } = this.props;
+    this.setState({ movies });
   }
 
   showMovies = movies => {
-    console.log("movies", movies);
-
     return movies.map((movie, index) => {
       return (
         <div

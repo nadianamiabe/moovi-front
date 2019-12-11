@@ -6,18 +6,40 @@ import "./App.css";
 import PrivateRoute from "./router/PrivateRoute";
 import Movies from "./components/pages/movies/Movies";
 import MovieDetails from "./components/pages/MovieDetails/MovieDetails";
+import api from "./api/api";
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
-      isUserAuthenticated: false
+      isUserAuthenticated: false,
+      movies: []
     };
 
     const authToken = localStorage.getItem("loggedUser");
 
     if (authToken) this.state.isUserAuthenticated = true;
   }
+
+  async componentDidMount() {
+    const movies = await this.showMovies();
+    console.log("filmes", movies);
+
+    this.setState({
+      movies: movies.slice()
+    });
+  }
+
+  showMovies = async () => {
+    const { data } = await api({
+      url: `http://localhost:5000/api/movies/now-playing`,
+      method: "GET"
+    });
+    console.log(data.movies);
+
+    return data.movies;
+  };
+
 
   authenticateUser = () => {
     this.setState({ isUserAuthenticated: true });
@@ -29,7 +51,7 @@ class App extends Component {
   };
 
   render() {
-    const { isUserAuthenticated } = this.state;
+    const { isUserAuthenticated, movies } = this.state;
 
     return (
       <div>
@@ -57,17 +79,14 @@ class App extends Component {
             )}
           />
           <Route exact path="/users/signup" component={Signup} />
-          {/* <Route exact path="/movies/now-playing" component={Movies} /> */}
           <PrivateRoute
-            exact
-            path="/movies/now-playing"
-            component={Movies}
+            route="/movies/now-playing"
+            component={() => <Movies movies={this.state.movies} />}
             isAuth={isUserAuthenticated}
           />
           <PrivateRoute
-            exact
-            path="/movies/:id"
-            component={MovieDetails}
+            route="/movies/:id"
+            component={() => <MovieDetails movies={this.state.movies} />}
             isAuth={isUserAuthenticated}
           />
         </Switch>

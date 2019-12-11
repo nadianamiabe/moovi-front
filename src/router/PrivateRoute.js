@@ -1,8 +1,10 @@
 import React from "react";
 import { Redirect, Route } from "react-router-dom";
 
-export const PrivateRoute = ({ component: Component, isAuth, ...rest }) => (
+export const PrivateRoute = ({ component: Component, isAuth, route, ...rest }) => (
   <Route
+    exact
+    path={route}
     render={props =>
       isAuth ? (
         <Component {...rest} {...props} />

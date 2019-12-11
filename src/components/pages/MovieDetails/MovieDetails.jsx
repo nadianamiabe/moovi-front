@@ -1,31 +1,37 @@
 import React, { Component } from "react";
-import axios from "axios";
+import api from "../../../api/api";
 
 class MovieDetails extends Component {
   state = {
-    movie: {}
+    movie: {},
+    movies: []
   };
 
-  async componentDidMount() {
-    const movie = await this.showDetails;
-    this.setState({ movie });
-  }
+  showDetail = async () => {
+    const { id } = this.props.match.params;
 
-  showDetails = async () => {
-    const { movieId } = this.props.match.params;
-    console.log(movieId);
+    const res = await api.get(`http://localhost:5000/api/movies/${id}`);
+    console.log(res);
 
-    const res = await axios.get(`http://localhost:5000/api/movies/${movieId}`);
+    this.setState({ movies: res.slice() });
     return res.data;
   };
 
+  async componentDidMount() {
+    const details = await this.showDetail();
+    
+    // console.log("movies", showMovies);
+
+    this.setState({ movie: details });
+
+    // this.setState({
+    //   movie: data
+    // });
+  }
+
   render() {
-    const { title } = this.state.movie;
-    return (
-      <div>
-        <p>{title}</p>
-      </div>
-    );
+    const { movie } = this.state;
+    return <h1>{movie.Title}</h1>;
   }
 }
 
