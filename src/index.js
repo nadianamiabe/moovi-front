@@ -7,7 +7,7 @@ import App from './App';
 import Navbar from './components/pages/Navbar/Navbar';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter } from 'react-router-dom';
-import { Layout, Menu, Breadcrumb } from 'antd';
+import { Layout } from 'antd';
 
 const { Footer } = Layout;
 
