@@ -40,7 +40,6 @@ class App extends Component {
     return data.movies;
   };
 
-
   authenticateUser = () => {
     this.setState({ isUserAuthenticated: true });
   };
@@ -51,7 +50,7 @@ class App extends Component {
   };
 
   render() {
-    const { isUserAuthenticated, movies } = this.state;
+    const { isUserAuthenticated } = this.state;
 
     return (
       <div>
