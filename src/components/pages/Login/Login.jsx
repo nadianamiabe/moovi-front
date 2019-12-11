@@ -1,11 +1,11 @@
-import React, { Component } from "react";
-import api from "../../../api/api";
-import { Form, Icon, Input, Button, Checkbox } from "antd";
+import React, { Component } from 'react';
+import api from '../../../api/api';
+import { Form, Icon, Input, Button, Checkbox } from 'antd';
 
 class NormalLoginForm extends Component {
   state = {
-    username: "",
-    password: ""
+    username: '',
+    password: ''
   };
 
   handleChange = e => {
@@ -19,13 +19,13 @@ class NormalLoginForm extends Component {
 
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log("Received values of form: ", values);
+        console.log('Received values of form: ', values);
       }
     });
 
     const response = await api({
-      url: "http://localhost:5000/api/users/login",
-      method: "POST",
+      url: 'http://localhost:5000/api/users/login',
+      method: 'POST',
       data: this.state
     });
 
@@ -33,9 +33,9 @@ class NormalLoginForm extends Component {
       const token = JSON.stringify(response.data);
       const { authenticateUser, history } = this.props;
 
-      localStorage.setItem("loggedUser", token);
+      localStorage.setItem('loggedUser', token);
       authenticateUser();
-      history.push("/");
+      history.push('/');
     }
   };
 
@@ -46,28 +46,28 @@ class NormalLoginForm extends Component {
       <article class="mw6 center bg-white shadow-5 br3 pa3 pa4-ns mv3 ba b--black-10">
         <Form onSubmit={this.handleSubmit} className="login-form">
           <Form.Item>
-            {getFieldDecorator("username", {
+            {getFieldDecorator('username', {
               rules: [
-                { required: true, message: "Please input your username!" }
+                { required: true, message: 'Please input your username!' }
               ]
             })(
               <Input
                 prefix={
-                  <Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />
+                  <Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />
                 }
                 placeholder="Username"
               />
             )}
           </Form.Item>
           <Form.Item>
-            {getFieldDecorator("password", {
+            {getFieldDecorator('password', {
               rules: [
-                { required: true, message: "Please input your Password!" }
+                { required: true, message: 'Please input your Password!' }
               ]
             })(
               <Input
                 prefix={
-                  <Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />
+                  <Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />
                 }
                 type="password"
                 placeholder="Password"
@@ -75,10 +75,10 @@ class NormalLoginForm extends Component {
             )}
           </Form.Item>
           <Form.Item>
-            {getFieldDecorator("remember", {
-              valuePropName: "checked",
+            {/* {getFieldDecorator('remember', {
+              valuePropName: 'checked',
               initialValue: true
-            })(<Checkbox>Remember me</Checkbox>)}
+            })(<Checkbox>Remember me</Checkbox>)} */}
             <a className="login-form-forgot" href="">
               Forgot password
             </a>
@@ -122,7 +122,7 @@ class NormalLoginForm extends Component {
   }
 }
 
-const Login = Form.create({ name: "normal_login" })(NormalLoginForm);
+const Login = Form.create({ name: 'normal_login' })(NormalLoginForm);
 
 //ReactDOM.render(<WrappedNormalLoginForm />, mountNode);
 

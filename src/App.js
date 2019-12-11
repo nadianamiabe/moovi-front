@@ -1,13 +1,13 @@
-import React, { Component } from "react";
-import { Link, Switch, Route } from "react-router-dom";
-import Signup from "./components/pages/Signup/Signup";
-import Login from "./components/pages/Login/Login";
-import "./App.css";
+import React, { Component } from 'react';
+import { Link, Switch, Route } from 'react-router-dom';
+import Signup from './components/pages/Signup/Signup';
+import Login from './components/pages/Login/Login';
+import './App.css';
 
-import PrivateRoute from "./router/PrivateRoute";
-import Movies from "./components/pages/movies/Movies";
-import MovieDetails from "./components/pages/MovieDetails/MovieDetails";
-import { AllTheaters } from "./components/pages/AllTheaters/AllTheaters";
+import PrivateRoute from './router/PrivateRoute';
+import Movies from './components/pages/movies/Movies';
+import MovieDetails from './components/pages/MovieDetails/MovieDetails';
+import { AllTheaters } from './components/pages/AllTheaters/AllTheaters';
 
 class App extends Component {
   constructor() {
@@ -16,7 +16,7 @@ class App extends Component {
       isUserAuthenticated: false
     };
 
-    const authToken = localStorage.getItem("loggedUser");
+    const authToken = localStorage.getItem('loggedUser');
 
     if (authToken) this.state.isUserAuthenticated = true;
   }
@@ -26,7 +26,7 @@ class App extends Component {
   };
 
   logoutUser = () => {
-    localStorage.removeItem("loggedUser");
+    localStorage.removeItem('loggedUser');
     this.setState({ isUserAuthenticated: false });
   };
 
@@ -59,10 +59,7 @@ class App extends Component {
             )}
           />
           <Route exact path="/users/signup" component={Signup} />
-<<<<<<< HEAD
           <Route exact path="/all-movie-theaters" component={AllTheaters} />
-
-=======
           {/* <Route exact path="/movies/now-playing" component={Movies} /> */}
           <PrivateRoute
             exact
@@ -76,7 +73,6 @@ class App extends Component {
             component={MovieDetails}
             isAuth={isUserAuthenticated}
           />
->>>>>>> b168eeeae5f53b355ef8783d26bf2c065a6ff271
         </Switch>
       </div>
     );
