@@ -19,7 +19,7 @@ class App extends Component {
       movies: []
     };
 
-    const authToken = localStorage.getItem('loggedUser');
+    const authToken = localStorage.getItem("loggedUser");
 
     if (authToken) this.state.isUserAuthenticated = true;
   }
@@ -47,7 +47,7 @@ class App extends Component {
   };
 
   logoutUser = () => {
-    localStorage.removeItem('loggedUser');
+    localStorage.removeItem("loggedUser");
     this.setState({ isUserAuthenticated: false });
   };
 
@@ -85,7 +85,7 @@ class App extends Component {
           {/* <Route exact path="/movies/now-playing" component={Movies} /> */}
           <PrivateRoute
             exact
-            path="/subscribe/:planId"
+            route="/subscribe/:planId"
             component={Checkout}
             isAuth={isUserAuthenticated}
           />
@@ -94,11 +94,10 @@ class App extends Component {
             component={() => <Movies movies={this.state.movies} />}
             isAuth={isUserAuthenticated}
           />
-
           <PrivateRoute
-            route="/movies/:id"
-            component={() => <MovieDetails movies={this.state.movies} />}
+            route="/movie/:id"
             isAuth={isUserAuthenticated}
+            component={() => <MovieDetails movies={this.state.movies} />}
           />
         </Switch>
       </div>

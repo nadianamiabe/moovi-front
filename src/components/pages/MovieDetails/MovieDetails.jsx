@@ -17,14 +17,14 @@ class MovieDetails extends Component {
   };
 
   async componentDidMount() {
-    console.log(this.props.match);
+    console.log("did mount", this.props.match);
     const { movie } = await this.showDetail();
     this.setState({ movie });
   }
 
   render() {
     const { movie } = this.state;
-    console.log(movie);
+    console.log("ois");
 
     return (
       <div>
