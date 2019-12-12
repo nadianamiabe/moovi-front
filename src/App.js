@@ -19,7 +19,7 @@ class App extends Component {
       movies: []
     };
 
-    const authToken = localStorage.getItem("loggedUser");
+    const authToken = localStorage.getItem('loggedUser');
 
     if (authToken) this.state.isUserAuthenticated = true;
   }
@@ -47,7 +47,7 @@ class App extends Component {
   };
 
   logoutUser = () => {
-    localStorage.removeItem("loggedUser");
+    localStorage.removeItem('loggedUser');
     this.setState({ isUserAuthenticated: false });
   };
 
