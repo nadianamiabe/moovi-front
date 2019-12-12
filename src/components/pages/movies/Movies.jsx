@@ -15,6 +15,8 @@ class Movies extends Component {
 
   async componentDidMount() {
     const { movies } = this.props;
+    console.log(this.props);
+
     this.setState({ movies });
   }
 
@@ -28,14 +30,14 @@ class Movies extends Component {
         >
           <Link to={`/movies/${movie.tmdb_id}`}>
             <Card title={movie.title} bordered={false}>
+              <p>{movie.release_date}</p>
               <img
                 src={movie.poster_urls[0]}
                 alt="movie_image"
                 onClick={e => this.clickHandler(e, index)}
               />
               <p>{movie.overview}</p>
-              <p>{movie.release_date}</p>
-              <p>{movie._id}</p>
+              <p>{movie.tmdb_id}</p>
             </Card>
           </Link>
         </div>
@@ -44,6 +46,8 @@ class Movies extends Component {
   };
   render() {
     const { movies } = this.state;
+    console.log(`aqui`, movies);
+
     return <div>{this.showMovies(movies)}</div>;
   }
 }
