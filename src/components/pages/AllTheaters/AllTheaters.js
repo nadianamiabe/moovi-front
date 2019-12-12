@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import api from '../../../api/api';
 import { List, Avatar } from 'antd';
 import { Container } from './AllTheaters.styles'
+import MyFancyComponent from '../../GoogleMaps/GoogleMaps'
 
 export class AllTheaters extends Component {
   state = {
@@ -49,6 +50,7 @@ render() {
               </List.Item>
             )}
             />
+      <MyFancyComponent />
     </Container>
           )
         }

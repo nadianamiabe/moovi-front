@@ -59,10 +59,7 @@ class App extends Component {
             )}
           />
           <Route exact path="/users/signup" component={Signup} />
-<<<<<<< HEAD
-          <Route exact path="/all-movie-theaters" component={AllTheaters} />
 
-=======
           {/* <Route exact path="/movies/now-playing" component={Movies} /> */}
           <PrivateRoute
             exact
@@ -76,7 +73,12 @@ class App extends Component {
             component={MovieDetails}
             isAuth={isUserAuthenticated}
           />
->>>>>>> b168eeeae5f53b355ef8783d26bf2c065a6ff271
+          <PrivateRoute 
+            exact 
+            path="/all-movie-theaters" 
+            component={AllTheaters} 
+            isAuth={isUserAuthenticated}
+          />
         </Switch>
       </div>
     );
