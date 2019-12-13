@@ -3,12 +3,13 @@ import api from "../../../api/api";
 
 class MovieDetails extends Component {
   state = {
-    movie: {}
+    movie: {},
+    movies: this.props.movies,
+    moviesLoaded: false
   };
 
   showDetail = async () => {
-    console.log("roberto");
-    const { id } = this.props.match.params;
+    const { id } = this.props.computedMatch.params;
 
     const res = await api.get(`http://localhost:5000/api/movies/${id}`);
     console.log(res.data);
@@ -16,15 +17,28 @@ class MovieDetails extends Component {
     return res.data;
   };
 
+  getMovie = () => {
+    const { id } = this.props.computedMatch.params;
+    console.log(this.props.movies);
+    const movie = this.props.movies.filter(movie => movie.tmdb_id == id);
+    console.log(this.props.movies);
+    console.log(movie);
+    return movie;
+  };
+
   async componentDidMount() {
-    console.log("did mount", this.props.match);
-    const { movie } = await this.showDetail();
-    this.setState({ movie });
+    console.log(this.props);
+    const movieOmdb = await this.showDetail();
+    const movieTmdb = this.getMovie();
+    console.log(movieOmdb);
+    this.setState({ movie: { ...movieOmdb }, movies: { ...movieTmdb } });
+    console.log("moviee", this.state.movie);
   }
 
   render() {
+    console.log(this.props.movies);
     const { movie } = this.state;
-    console.log("ois");
+    console.log("ois", this.state);
 
     return (
       <div>

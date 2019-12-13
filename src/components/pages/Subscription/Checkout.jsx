@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import { Elements, StripeProvider } from "react-stripe-elements";
 import CheckoutForm from "./CheckoutForm";
-import api from '../../../api/api';
-import './Checkout.css';
-
+import api from "../../../api/api";
+import "./Checkout.css";
 
 class Checkout extends Component {
   constructor(props) {
@@ -17,23 +16,24 @@ class Checkout extends Component {
   async componentDidMount() {
     const key = await this.getKey();
     console.log(key);
-      this.setState({
-        apiKey: key
-      });
+    this.setState({
+      apiKey: key
+    });
   }
 
   getKey = async () => {
     const request = await api({
-      url: 'http://localhost:5000/api/payments/public-key',
-      method: 'GET',
+      url: "http://localhost:5000/api/payments/public-key",
+      method: "GET"
     });
+
     const { key } = request.data;
     return key;
-  }
+  };
 
   render() {
-    const { planId }  = this.props.computedMatch.params;
-    console.log(planId);
+    const { planId } = this.props.computedMatch.params;
+    console.log(this.state.apiKey);
     return (
       <div className="checkout">
         {this.state.apiKey && (

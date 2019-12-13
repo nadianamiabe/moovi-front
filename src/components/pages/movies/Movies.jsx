@@ -13,13 +13,6 @@ class Movies extends Component {
     console.log(index);
   };
 
-  async componentDidMount() {
-    const { movies } = this.props;
-    console.log(this.props);
-
-    this.setState({ movies });
-  }
-
   showMovies = movies =>
     movies.map((movie, index) => (
       <div
@@ -43,7 +36,7 @@ class Movies extends Component {
     ));
 
   render() {
-    const { movies } = this.state;
+    const { movies } = this.props;
     console.log(`aqui`, movies);
 
     return <div>{this.showMovies(movies)}</div>;

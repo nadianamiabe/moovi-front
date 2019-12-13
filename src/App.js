@@ -16,7 +16,8 @@ class App extends Component {
     super();
     this.state = {
       isUserAuthenticated: false,
-      movies: []
+      movies: [],
+      moviesLoaded: false,
     };
 
     const authToken = localStorage.getItem("loggedUser");
@@ -28,7 +29,8 @@ class App extends Component {
     const movies = await this.showMovies();
 
     this.setState({
-      movies: movies.slice()
+      movies: movies.slice(),
+      moviesLoaded: true,
     });
   }
 
@@ -54,7 +56,7 @@ class App extends Component {
   render() {
     const { isUserAuthenticated } = this.state;
 
-    return (
+    return ( this.state.moviesLoaded &&
       <div>
         {isUserAuthenticated ? (
           <div>
@@ -84,20 +86,22 @@ class App extends Component {
           <Route exact path="/all-movie-theaters" component={AllTheaters} />
           {/* <Route exact path="/movies/now-playing" component={Movies} /> */}
           <PrivateRoute
-            exact
-            route="/subscribe/:planId"
+            path="/movies/now-playing"
+            component={Movies}
+            isAuth={isUserAuthenticated}
+            propsMovies={this.state.movies}
+          />
+          <PrivateRoute
+            path="/subscribe/:planId"
             component={Checkout}
             isAuth={isUserAuthenticated}
           />
           <PrivateRoute
-            route="/movies/now-playing"
-            component={() => <Movies movies={this.state.movies} />}
+            exact
+            path="/movie/:id"
             isAuth={isUserAuthenticated}
-          />
-          <PrivateRoute
-            route="/movie/:id"
-            isAuth={isUserAuthenticated}
-            component={() => <MovieDetails movies={this.state.movies} />}
+            component={MovieDetails}
+            propsMovies={this.state.movies}
           />
         </Switch>
       </div>
