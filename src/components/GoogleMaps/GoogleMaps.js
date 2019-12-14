@@ -1,6 +1,6 @@
 import React, { Component } from "react"
-import { compose, withProps } from "recompose"
-import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps"
+import { compose, withProps, withStateHandlers } from "recompose"
+import { withScriptjs, withGoogleMap, GoogleMap, Marker, InfoWindow } from "react-google-maps"
 
 const MyMapComponent = compose(
   withProps({
@@ -9,17 +9,51 @@ const MyMapComponent = compose(
     containerElement: <div style={{ height: `400px` }} />,
     mapElement: <div style={{ height: `100%` }} />,
   }),
+  withStateHandlers(() => ({
+    isOpen: false,
+    markerIndex: 0
+  }), {
+    onToggleOpen: ({ isOpen }) => (index) => ({
+      isOpen: !isOpen,
+      markerIndex: index
+    })
+  }),
   withScriptjs,
   withGoogleMap
 )((props) => {
-    const {latitude, longitude} = props.position
+    const { latitude, longitude } = props.position
+    console.log(props.list)
+
+    const markersList =  props.list.map((marker, i) => {
+      const index = i + 1 ;
+      return (
+        <Marker  
+          key={i}
+          label={index.toString()}
+          position={{ lat: marker.location.lat, lng: marker.location.lng }} 
+          onClick={ ()=> {props.onToggleOpen(index)} }
+        >
+          { props.isOpen && props.markerIndex === index &&
+              <InfoWindow onCloseClick={props.onToggleOpen}>
+                <div>
+                  <h1 style={{ fontSize: '1rem', }}>{marker.name}</h1> 
+                  <p style={{ fontSize: '0.8rem', }}>{marker.address}</p>  
+                </div>
+              </InfoWindow>
+          }
+        </Marker>
+      )
+      })
+
     return (
     <GoogleMap
-      defaultZoom={15}
-      defaultCenter={{ lat: -23.56165000482843, lng: -46.66010253294923 }}
+      defaultZoom={12}
+      defaultCenter={{ lat: latitude, lng: longitude }}
     >
-      {props.isMarkerShown && <Marker position={{ lat: latitude, lng: longitude }} onClick={props.onMarkerClick} />}
-
+      {props.isMarkerShown && <Marker  
+        position={{ lat: latitude, lng: longitude }} 
+        onClick={props.onMarkerClick} />}
+      {markersList}
     </GoogleMap>
     )
 })
@@ -27,15 +61,11 @@ const MyMapComponent = compose(
 class MyGoogleComponent extends Component {
   state = {
     isMarkerShown: true,
-    currentPos: {
-      latitude: null,
-      longitude: null, 
-    }
   }
 
   componentDidMount = async () => {
     this.delayedShowMarker()
-    await this.getLocation()
+    // await this.getLocation()
   }
 
   delayedShowMarker = () => {
@@ -49,33 +79,37 @@ class MyGoogleComponent extends Component {
     this.delayedShowMarker()
   }
 
-  getLocation = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(this.getCoordinates)
-    }
-  }
+  // getLocation = () => {
+  //   if (navigator.geolocation) {
+  //     navigator.geolocation.getCurrentPosition(this.getCoordinates)
+  //   }
+  // }
 
-  getCoordinates = (position) => {
-    this.setState({
-      currentPos: {
-        latitude: position.coords.latitude,
-        longitude: position.coords.longitude,
-      }
-    })
-    console.log('current position is:',  this.state.currentPos)
-  }
+  // getCoordinates = (position) => {
+  //   this.setState({
+  //     currentPos: {
+  //       latitude: position.coords.latitude,
+  //       longitude: position.coords.longitude,
+  //     }
+  //   })
+  //   console.log('current position is:',  this.state.currentPos)
+  // }
 
   render() {
-    console.log()
+    const{ showPlaceInfo } = this.props;
+    console.log('this props latitude', this.props.currentPos.latitude)
+    console.log('this props longitude', this.props.currentPos.longitude)
     return (
       <>
         <MyMapComponent
           isMarkerShown={this.state.isMarkerShown}
-          onMarkerClick={this.handleMarkerClick}
-          position={this.state.currentPos}
+          onMarkerClick={() => {
+            // showPlaceInfo()
+            this.handleMarkerClick();
+          }}
+          position= {this.props.currentPos}
+          list={this.props.list}
         />
-        <h1>This is position {this.state.currentPos.latitude}</h1>
-        <h1>This is position {this.state.currentPos.longitude}</h1>
       </>
     )
   }

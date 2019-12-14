@@ -9,6 +9,8 @@ import MovieDetails from './components/pages/MovieDetails/MovieDetails';
 import Checkout from './components/pages/Subscription/Checkout';
 import Home from './components/pages/Home/Home';
 import { AllTheaters } from './components/pages/AllTheaters/AllTheaters';
+import Axios from 'axios';
+
 
 class App extends Component {
   constructor() {
