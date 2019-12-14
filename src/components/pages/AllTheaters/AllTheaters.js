@@ -2,11 +2,16 @@ import React, { Component } from 'react';
 import api from '../../../api/api';
 import { List, Avatar } from 'antd';
 import { Container } from './AllTheaters.styles'
-import MyFancyComponent from '../../GoogleMaps/GoogleMaps'
+import MyGoogleComponent from '../../GoogleMaps/GoogleMaps'
 
 export class AllTheaters extends Component {
   state = {
     allTheaters: [],
+    currentPos: {
+      latitude: null,
+      longitude: null, 
+    }
+
   }
 
   async componentDidMount() {
@@ -14,6 +19,7 @@ export class AllTheaters extends Component {
     this.setState({
       allTheaters: resp.data,
     })
+    // this.getLocation()
     console.log(resp.data)
   }
 
@@ -25,6 +31,22 @@ export class AllTheaters extends Component {
     return allData;
   }
 
+  // getLocation = () => {
+  //   if (navigator.geolocation) {
+  //     navigator.geolocation.getCurrentPosition(this.getCoordinates)
+  //   }
+  // }
+
+  // getCoordinates = (position) => {
+  //   this.setState({
+  //     currentPos: {
+  //       latitude: position.coords.latitude,
+  //       longitude: position.coords.longitude,
+  //     }
+  //   })
+  //   console.log('current position is:',  this.state.currentPos)
+  // }
+
 //   listAllData = () => {
 //     const { allTheaters } = this.state; 
 //     return allTheaters.map((oneTheater) => {
@@ -35,6 +57,7 @@ export class AllTheaters extends Component {
 
 render() {
   const listOfData =  this.state.allTheaters;
+  const { currentPos } = this.state 
   return (
     <Container>
       <List
@@ -50,7 +73,8 @@ render() {
               </List.Item>
             )}
             />
-      <MyFancyComponent />
+      <MyGoogleComponent />
+      <h1>My curret positin is : latitude: {currentPos.latitude} and longitude:{currentPos.latitude} </h1>
     </Container>
           )
         }

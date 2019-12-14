@@ -20,7 +20,7 @@ class Movies extends Component {
     });
 
     this.setState({
-      movies: data.movies.slice()
+      movies: data.result.slice()
     });
   }
 
