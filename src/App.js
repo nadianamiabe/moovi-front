@@ -36,7 +36,7 @@ class App extends Component {
 
     return (
       <div>
-        {isUserAuthenticated ? (
+        {/* {isUserAuthenticated ? (
           <div>
             <h1>Estou logado</h1>
             <button onClick={this.logoutUser}>Logout</button>
@@ -48,7 +48,7 @@ class App extends Component {
             <Link to="/users/login">Entrar</Link>
             <Link to="/users/signup">Se cadastre!</Link>
           </div>
-        )}
+        )} */}
 
         {/* <Movies /> */}
         <Switch>
