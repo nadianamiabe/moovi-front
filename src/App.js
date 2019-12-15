@@ -9,6 +9,8 @@ import MovieDetails from './components/pages/MovieDetails/MovieDetails';
 import Checkout from './components/pages/Subscription/Checkout';
 import Home from './components/pages/Home/Home';
 import { AllTheaters } from './components/pages/AllTheaters/AllTheaters';
+import Axios from 'axios';
+
 
 class App extends Component {
   constructor() {
@@ -61,7 +63,6 @@ class App extends Component {
             )}
           />
           <Route exact path="/users/signup" component={Signup} />
-          <Route exact path="/all-movie-theaters" component={AllTheaters} />
           {/* <Route exact path="/movies/now-playing" component={Movies} /> */}
           <PrivateRoute
             exact
@@ -79,6 +80,12 @@ class App extends Component {
             exact
             path="/movies/:id"
             component={MovieDetails}
+            isAuth={isUserAuthenticated}
+          />
+          <PrivateRoute 
+            exact 
+            path="/all-movie-theaters" 
+            component={AllTheaters} 
             isAuth={isUserAuthenticated}
           />
         </Switch>
