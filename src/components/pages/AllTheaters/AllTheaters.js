@@ -45,7 +45,7 @@ export class AllTheaters extends Component {
     }, async () => {
       const resp = await this.getAllTheatersData();
       this.setState({
-        allTheaters: resp.data,
+        allTheaters: resp.data.allPlacesDB,
         isLoaded: true,
       })
       console.log(resp.data)
