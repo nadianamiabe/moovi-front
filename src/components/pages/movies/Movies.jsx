@@ -1,16 +1,11 @@
 import React, { Component } from "react";
 import api from "../../../api/api";
-import { Card } from "antd";
-import { Link } from "react-router-dom";
-import "./Movies.css";
+import { Container, Image, Header, Card } from 'semantic-ui-react';
+
 
 class Movies extends Component {
   state = {
     movies: []
-  };
-
-  clickHandler = (e, index) => {
-    console.log(index);
   };
 
   async componentDidMount() {
@@ -20,39 +15,35 @@ class Movies extends Component {
     });
 
     this.setState({
-      movies: data.result.slice()
+      movies: data.slice()
     });
   }
 
-  showMovies = movies => {
-    console.log("movies", movies);
 
-    return movies.map((movie, index) => {
-      return (
-        <div
-          style={{ background: "#ECECEC", padding: "30px" }}
-          key={movie.tmdb_id}
-          className="movie-card"
-        >
-          <Link to={`/movies/${movie.tmdb_id}`}>
-            <Card title={movie.title} bordered={false}>
-              <img
-                src={movie.poster_urls[0]}
-                alt="movie_image"
-                onClick={e => this.clickHandler(e, index)}
-              />
-              <p>{movie.overview}</p>
-              <p>{movie.release_date}</p>
-              <p>{movie._id}</p>
-            </Card>
-          </Link>
-        </div>
-      );
-    });
-  };
   render() {
     const { movies } = this.state;
-    return <div>{this.showMovies(movies)}</div>;
+    const movieCards = movies.map((movie) => {
+      const poster = movie.poster_urls[0];
+      return (
+          <Card 
+            key={movie.tmdb_id}
+            raised
+            link
+            href={`/movies/${movie.tmdb_id}`}
+            image={<Image style={{width: '100%'}} verticalAlign="middle" centered size="small" src={poster}/> } 
+          />
+      )
+    });
+      
+    return (
+      <Container>
+        <Header as="h2">Filmes em Cartaz</Header>
+        <Card.Group centered itemsPerRow={6}>
+          {movieCards}
+        </Card.Group>
+      </Container>
+        
+    ) 
   }
 }
 
