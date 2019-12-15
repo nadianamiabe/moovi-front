@@ -9,7 +9,7 @@ import MovieDetails from './components/pages/MovieDetails/MovieDetails';
 import Checkout from './components/pages/Subscription/Checkout';
 import Home from './components/pages/Home/Home';
 import { AllTheaters } from './components/pages/AllTheaters/AllTheaters';
-import Axios from 'axios';
+
 
 
 class App extends Component {
@@ -38,7 +38,7 @@ class App extends Component {
 
     return (
       <div>
-        {isUserAuthenticated ? (
+        {/* {isUserAuthenticated ? (
           <div>
             <h1>Estou logado</h1>
             <button onClick={this.logoutUser}>Logout</button>
@@ -50,7 +50,7 @@ class App extends Component {
             <Link to="/users/login">Entrar</Link>
             <Link to="/users/signup">Se cadastre!</Link>
           </div>
-        )}
+        )} */}
 
         {/* <Movies /> */}
         <Switch>
@@ -66,14 +66,14 @@ class App extends Component {
           {/* <Route exact path="/movies/now-playing" component={Movies} /> */}
           <PrivateRoute
             exact
-            path="/subscribe/:planId"
-            component={Checkout}
+            path="/movies/now-playing"
+            component={Movies}
             isAuth={isUserAuthenticated}
           />
           <PrivateRoute
             exact
-            path="/movies/now-playing"
-            component={Movies}
+            path="/subscribe/:planId"
+            component={Checkout}
             isAuth={isUserAuthenticated}
           />
           <PrivateRoute

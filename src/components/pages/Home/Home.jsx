@@ -1,20 +1,20 @@
 import React, { Component } from 'react';
-import PlanCard  from '../../atoms/Card/PlanCard';
 import { Card, Container } from 'semantic-ui-react';
+import Carousel from '../Carousel/Carousel';
+import PlanCard from '../../atoms/Card/PlanCard';
 class Home extends Component {
-
   state = {
     plans: {
       fanatic: 'plan_GG68SiiJKHacGo',
       adventure: 'plan_GG61UfbTdoFMtl',
-      basic: 'plan_GG63EMsmJkPfA6',
-    },
+      basic: 'plan_GG63EMsmJkPfA6'
+    }
   };
 
   render() {
     return (
       <div>
-        <h1>Home Page</h1>
+        <Carousel />
         <Container>
           <Card.Group centered >
             <PlanCard 
@@ -37,10 +37,8 @@ class Home extends Component {
           </Card.Group>
         </Container>
       </div>
-      
-    )
+    );
   }
-
 }
 
 export default Home;
