@@ -14,7 +14,7 @@ const MyMapComponent = compose(
       "https://maps.googleapis.com/maps/api/js?key=AIzaSyCQpuEpO4UtIbYaCSI_-v9_bBuxOgTMbKw&libraries=geometry,drawing,places",
     loadingElement: <div style={{ height: `100%` }} />,
     containerElement: <div style={{ height: `400px` }} />,
-    mapElement: <div style={{ height: `100%` }} />
+    mapElement: <div style={{ height: `100%` }} />,
   }),
   withStateHandlers(
     () => ({
@@ -30,36 +30,36 @@ const MyMapComponent = compose(
   ),
   withScriptjs,
   withGoogleMap
-)(props => {
-  const { latitude, longitude } = props.position;
-  console.log(props.list);
+)((props) => {
+    const { latitude, longitude } = props.position
+    const markersList =  props.list.map((marker, i) => {
+      const index = i + 1 ;
+      return (
+        <Marker  
+          key={i}
+          label={index.toString()}
+          position={{ lat: marker.location.lat, lng: marker.location.lng }} 
+          onClick={ () => { props.showTime(marker._id)}
+        }
+        onMouseOver={ () => { props.onToggleOpen(index)}
+        }
+        >
+          { props.isOpen && props.markerIndex === index &&
+              <InfoWindow onCloseClick={props.onToggleOpen}>
+                <div>
+                  <h1 style={{ fontSize: '1rem', }}>{marker.name}</h1> 
+                  <p style={{ fontSize: '0.8rem', }}>{marker.address}</p>  
+                </div>
+              </InfoWindow>
+          }
+        </Marker>
+      )
+      })
 
-  const markersList = props.list.map((marker, i) => {
-    const index = i + 1;
-    return (
-      <Marker
-        key={i}
-        label={index.toString()}
-        position={{ lat: marker.location.lat, lng: marker.location.lng }}
-        onClick={() => {
-          props.onToggleOpen(index);
-        }}
-      >
-        {props.isOpen && props.markerIndex === index && (
-          <InfoWindow onCloseClick={props.onToggleOpen}>
-            <div>
-              <h1 style={{ fontSize: "1rem" }}>{marker.name}</h1>
-              <p style={{ fontSize: "0.8rem" }}>{marker.address}</p>
-            </div>
-          </InfoWindow>
-        )}
-      </Marker>
-    );
-  });
 
   return (
     <GoogleMap
-      defaultZoom={12}
+      defaultZoom={15}
       defaultCenter={{ lat: latitude, lng: longitude }}
     >
       {props.isMarkerShown && (
@@ -94,26 +94,7 @@ class MyGoogleComponent extends Component {
     this.delayedShowMarker();
   };
 
-  // getLocation = () => {
-  //   if (navigator.geolocation) {
-  //     navigator.geolocation.getCurrentPosition(this.getCoordinates)
-  //   }
-  // }
-
-  // getCoordinates = (position) => {
-  //   this.setState({
-  //     currentPos: {
-  //       latitude: position.coords.latitude,
-  //       longitude: position.coords.longitude,
-  //     }
-  //   })
-  //   console.log('current position is:',  this.state.currentPos)
-  // }
-
   render() {
-    // const{ showPlaceInfo } = this.props;
-    console.log("this props latitude", this.props.currentPos.latitude);
-    console.log("this props longitude", this.props.currentPos.longitude);
     return (
       <>
         <MyMapComponent
@@ -124,6 +105,7 @@ class MyGoogleComponent extends Component {
           }}
           position={this.props.currentPos}
           list={this.props.list}
+          showTime= {this.props.showTime}
         />
       </>
     );
