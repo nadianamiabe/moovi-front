@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import api from '../../../api/api';
 import VideoPlayer from './VideoPlayer';
-import api from "../../../api/api";
 import "./MovieDetails.scss";
 
 
@@ -59,7 +58,7 @@ class MovieDetails extends Component {
   render() {
     const { tmdbDetail, omdbDetail } = this.state;
     return (
-
+    <div>
       <div>
         {
           this.state.movieTrailerUrl && 
@@ -87,6 +86,7 @@ class MovieDetails extends Component {
         </div>
         <div class="blur_back"></div>
       </div>
+    </div>
     );
   }
 }
