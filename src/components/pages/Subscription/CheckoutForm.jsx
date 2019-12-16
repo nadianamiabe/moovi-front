@@ -101,11 +101,6 @@ class CheckoutForm extends Component {
       .catch(err => this.setState({error: err.message}));
   };
 
-  toggle = () => {
-    const { succeeded } = this.state;
-    this.setState({succeeded: !succeeded});
-  }
-  
   renderSuccess = () => {
     return (
     <div>
@@ -157,7 +152,6 @@ class CheckoutForm extends Component {
   render() {
     return (
     <Container style={{ position:'relative', width: '35%', margin: '0 auto', paddingTop: '50px'}}>
-      <Button onClick={this.toggle}></Button>
       {this.state.succeeded && this.renderSuccess()}
       {!this.state.succeeded && this.renderForm()}
     </Container>
