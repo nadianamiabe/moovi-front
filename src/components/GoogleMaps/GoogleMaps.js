@@ -56,6 +56,7 @@ const MyMapComponent = compose(
       )
       })
 
+
   return (
     <GoogleMap
       defaultZoom={15}

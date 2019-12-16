@@ -14,7 +14,14 @@ const { Footer } = Layout;
 ReactDOM.render(
   <Layout>
     <Navbar />
-    <div style={{ background: '#fff', padding: 24, minHeight: 380 }}>
+    <div
+      style={{
+        background: '#fff',
+        padding: 0,
+        minHeight: 380,
+        marginTop: 50
+      }}
+    >
       <BrowserRouter>
         <App />
       </BrowserRouter>

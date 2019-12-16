@@ -17,6 +17,10 @@
   color: white;
 }
 
+.ant-layout-header {
+  padding: 0 0 0 50px;
+}
+
 .App-link {
   color: #09d3ac;
 }

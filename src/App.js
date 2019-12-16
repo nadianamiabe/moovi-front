@@ -1,16 +1,14 @@
-import React, { Component } from 'react';
-import { Link, Switch, Route } from 'react-router-dom';
-import Signup from './components/pages/Signup/Signup';
-import Login from './components/pages/Login/Login';
-import './App.css';
-import PrivateRoute from './router/PrivateRoute';
-import Movies from './components/pages/movies/Movies';
-import MovieDetails from './components/pages/MovieDetails/MovieDetails';
-import Checkout from './components/pages/Subscription/Checkout';
-import Home from './components/pages/Home/Home';
-import { AllTheaters } from './components/pages/AllTheaters/AllTheaters';
-import Axios from 'axios';
-
+import React, { Component } from "react";
+import { Switch, Route } from "react-router-dom";
+import Signup from "./components/pages/Signup/Signup";
+import Login from "./components/pages/Login/Login";
+import "./App.css";
+import PrivateRoute from "./router/PrivateRoute";
+import Movies from "./components/pages/movies/Movies";
+import MovieDetails from "./components/pages/MovieDetails/MovieDetails";
+import Checkout from "./components/pages/Subscription/Checkout";
+import Home from "./components/pages/Home/Home";
+import { AllTheaters } from "./components/pages/AllTheaters/AllTheaters";
 
 class App extends Component {
   constructor() {
@@ -19,7 +17,7 @@ class App extends Component {
       isUserAuthenticated: false
     };
 
-    const authToken = localStorage.getItem('loggedUser');
+    const authToken = localStorage.getItem("loggedUser");
 
     if (authToken) this.state.isUserAuthenticated = true;
   }
@@ -29,7 +27,7 @@ class App extends Component {
   };
 
   logoutUser = () => {
-    localStorage.removeItem('loggedUser');
+    localStorage.removeItem("loggedUser");
     this.setState({ isUserAuthenticated: false });
   };
 
@@ -38,7 +36,7 @@ class App extends Component {
 
     return (
       <div>
-        {isUserAuthenticated ? (
+        {/* {isUserAuthenticated ? (
           <div>
             <h1>Estou logado</h1>
             <button onClick={this.logoutUser}>Logout</button>
@@ -50,7 +48,7 @@ class App extends Component {
             <Link to="/users/login">Entrar</Link>
             <Link to="/users/signup">Se cadastre!</Link>
           </div>
-        )}
+        )} */}
 
         {/* <Movies /> */}
         <Switch>
@@ -66,14 +64,14 @@ class App extends Component {
           {/* <Route exact path="/movies/now-playing" component={Movies} /> */}
           <PrivateRoute
             exact
-            path="/subscribe/:planId"
-            component={Checkout}
+            path="/movies/now-playing"
+            component={Movies}
             isAuth={isUserAuthenticated}
           />
           <PrivateRoute
             exact
-            path="/movies/now-playing"
-            component={Movies}
+            path="/subscribe/:planId"
+            component={Checkout}
             isAuth={isUserAuthenticated}
           />
           <PrivateRoute
@@ -82,10 +80,10 @@ class App extends Component {
             component={MovieDetails}
             isAuth={isUserAuthenticated}
           />
-          <PrivateRoute 
-            exact 
-            path="/all-movie-theaters" 
-            component={AllTheaters} 
+          <PrivateRoute
+            exact
+            path="/all-movie-theaters"
+            component={AllTheaters}
             isAuth={isUserAuthenticated}
           />
         </Switch>
