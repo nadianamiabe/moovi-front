@@ -15,7 +15,7 @@ class Home extends Component {
     return (
       <div>
         <Carousel />
-        <Container>
+        <Container style={{marginTop: '50px'}}>
           <Card.Group centered >
             <PlanCard 
             planId={this.state.plans.basic} 
