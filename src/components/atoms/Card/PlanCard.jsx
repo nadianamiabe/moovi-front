@@ -1,25 +1,25 @@
 import React from 'react';
-import { Card, Button } from 'antd';
+import { Card, Button, Image} from 'semantic-ui-react'
 import { Link } from 'react-router-dom';
 
-const { Meta } = Card;
-const PlanCard = ({planId, title, description, price}) => {
+const PlanCard = ({planId, title, description, price, planName}) => {
 
   return (
-    <div style={{background: '#ECECEC', padding: '30px'}}>
-      <Card 
-      title={title} 
-      actions={[
-        <Link to={`/subscribe/${planId}`}>
-          <Button type="primary" block>
-            {`R$${price} / month`}
-          </Button>
-        </Link>
-      ]}>
-        <Meta description={description} />
-        <img src='/images/movie_ticket_black.svg' width="50" alt="ticket" />
-      </Card>
-    </div>
+    <Card raised style={{marginRight: '50px'}}>
+      <Card.Content textAlign="center">
+        <Card.Header>{title}</Card.Header>
+        <Card.Description>{description}</Card.Description>
+        <Image verticalAlign="middle" size="small" src="/images/movie_ticket_black.svg"></Image>
+        <Card.Content extra>
+          <Link to={`/subscribe/${planId}`}>
+            <Button fluid color="yellow" animated='fade'>
+              <Button.Content visible>Sign-up for a {planName} plan</Button.Content>
+              <Button.Content hidden>${price} a month</Button.Content>
+            </Button>
+          </Link>
+        </Card.Content>
+      </Card.Content>
+    </Card>
   )
 
 }
