@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Layout, Menu } from "antd";
-import { voidTypeAnnotation } from "@babel/types";
 
 class navbar extends Component {
   render() {
@@ -15,7 +14,7 @@ class navbar extends Component {
         }}
       >
         <div className="logo" />
-        <img src="./images/Logo-moovi.png" width="120" alt="logo" />
+        <img src="../images/Logo-moovi.png" width="120" alt="logo" />
         <Menu
           theme="dark"
           mode="horizontal"
