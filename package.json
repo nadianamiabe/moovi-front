@@ -5,6 +5,7 @@
   "dependencies": {
     "antd": "^3.26.1",
     "axios": "^0.19.0",
+    "node-sass": "^4.13.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-google-maps": "^9.4.5",
@@ -35,5 +36,17 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/namiabe/moovi-front.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/namiabe/moovi-front/issues"
+  },
+  "homepage": "https://github.com/namiabe/moovi-front#readme"
 }

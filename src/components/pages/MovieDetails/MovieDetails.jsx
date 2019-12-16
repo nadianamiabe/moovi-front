@@ -1,31 +1,49 @@
 import React, { Component } from "react";
-import api from '../../../api/api';
+import api from "../../../api/api";
+import "./MovieDetails.scss";
 
 class MovieDetails extends Component {
   state = {
     tmdbDetail: {},
-    omdbDetail: {},
+    omdbDetail: {}
   };
 
   async componentDidMount() {
     const data = await this.getDetails();
-    console.log(data);
     const { tmdbDetail, omdbDetail } = data;
+
     this.setState({ tmdbDetail, omdbDetail });
   }
-
   getDetails = async () => {
     const { id } = this.props.computedMatch.params;
-    console.log(id);
     const res = await api.get(`http://localhost:5000/api/movies/${id}`);
+
     return res.data;
   };
 
   render() {
-    const { title } = this.state.tmdbDetail;
+    const { tmdbDetail, omdbDetail } = this.state;
     return (
-      <div>
-        <p>{title}</p>
+      <div className="movie_card">
+        <div className="info_section">
+          <div className="movie_header">
+            <img
+              className="locandina"
+              src={omdbDetail.Poster}
+              alt="movie poster"
+            />
+            <h1>{tmdbDetail.title}</h1>
+            <h4>
+              {tmdbDetail.release_date} {omdbDetail.Director}
+            </h4>
+            <span className="minutes">{omdbDetail.Runtime}</span>
+            <p className="type">{omdbDetail.Genre}</p>
+          </div>
+          <div className="movie_desc">
+            <p className="text">{tmdbDetail.overview}</p>
+          </div>
+        </div>
+        <div class="blur_back"></div>
       </div>
     );
   }

@@ -1,28 +1,29 @@
-import React, { Component } from 'react';
-import { Layout, Menu } from 'antd';
+import React, { Component } from "react";
+import { Layout, Menu } from "antd";
+import { voidTypeAnnotation } from "@babel/types";
 
 class navbar extends Component {
   render() {
-    const { Header, Content, Footer } = Layout;
+    const { Header } = Layout;
     return (
       <Header
         style={{
-          position: 'fixed',
-          background: '#feb400',
+          position: "fixed",
+          background: "#feb400",
           zIndex: 1,
-          width: '100%'
+          width: "100%"
         }}
       >
         <div className="logo" />
-        <img src="./images/Logo-moovi.png" width="120" />
+        <img src="./images/Logo-moovi.png" width="120" alt="logo" />
         <Menu
           theme="dark"
           mode="horizontal"
-          defaultSelectedKeys={['0']}
+          defaultSelectedKeys={["0"]}
           style={{
-            background: '#000000',
-            lineHeight: '64px',
-            float: 'right'
+            background: "#000000",
+            lineHeight: "64px",
+            float: "right"
           }}
         >
           <Menu.Item key="0">
