@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
-import { Card, Container } from 'semantic-ui-react';
-import Carousel from '../Carousel/Carousel';
-import PlanCard from '../../atoms/Card/PlanCard';
+import React, { Component } from "react";
+import { Card, Container } from "semantic-ui-react";
+import Carousel from "../Carousel/Carousel";
+import PlanCard from "../../atoms/Card/PlanCard";
 class Home extends Component {
   state = {
     plans: {
-      fanatic: 'plan_GG68SiiJKHacGo',
-      adventure: 'plan_GG61UfbTdoFMtl',
-      basic: 'plan_GG63EMsmJkPfA6'
+      fanatic: "plan_GG68SiiJKHacGo",
+      adventure: "plan_GG61UfbTdoFMtl",
+      basic: "plan_GG63EMsmJkPfA6"
     }
   };
 

@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import api from '../../../api/api';
 import VideoPlayer from './VideoPlayer';
+import api from "../../../api/api";
+import "./MovieDetails.scss";
 
 
 class MovieDetails extends Component {
@@ -8,6 +10,7 @@ class MovieDetails extends Component {
     tmdbDetail: {},
     omdbDetail: {},
     movieTrailerUrl: null,
+
   };
 
   async componentDidMount() {
@@ -24,7 +27,6 @@ class MovieDetails extends Component {
       this.setState({movieTrailerUrl: url});
     }
   }
-
   getDetails = async () => {
     const { id } = this.props.computedMatch.params;
     try {
@@ -55,13 +57,35 @@ class MovieDetails extends Component {
   }
 
   render() {
-    const { title } = this.state.tmdbDetail;
+    const { tmdbDetail, omdbDetail } = this.state;
     return (
+
       <div>
         {
           this.state.movieTrailerUrl && 
           <VideoPlayer url={this.state.movieTrailerUrl}/>
         }
+      </div>
+      <div className="movie_card">
+        <div className="info_section">
+          <div className="movie_header">
+            <img
+              className="locandina"
+              src={omdbDetail.Poster}
+              alt="movie poster"
+            />
+            <h1>{tmdbDetail.title}</h1>
+            <h4>
+              {tmdbDetail.release_date} {omdbDetail.Director}
+            </h4>
+            <span className="minutes">{omdbDetail.Runtime}</span>
+            <p className="type">{omdbDetail.Genre}</p>
+          </div>
+          <div className="movie_desc">
+            <p className="text">{tmdbDetail.overview}</p>
+          </div>
+        </div>
+        <div class="blur_back"></div>
       </div>
     );
   }
