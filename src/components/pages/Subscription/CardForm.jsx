@@ -2,7 +2,6 @@ import React from 'react';
 import { CardElement } from 'react-stripe-elements';
 
 const style = { 
-
   base: {
     color: "#32325d",
     fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
@@ -21,10 +20,9 @@ const style = {
 
 const CardForm = () => {
   return (
-    <label> 
-      Card Details 
+    <div style={{border: 'solid 1px yellow', borderRadius: '5px'}}> 
       <CardElement className="MyCardElement" style={style}></CardElement>
-    </label>
+    </div>
   )
 }
 

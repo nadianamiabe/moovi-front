@@ -4,7 +4,7 @@ const isTokenExpired = ({ message }) => message === "Token expirado";
 
 const logout = () => {
   localStorage.removeItem("loggedItem");
-  window.location = "/login";
+  window.location = "/users/login";
 };
 
 export default async err => {
