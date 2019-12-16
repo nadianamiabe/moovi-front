@@ -21,6 +21,7 @@ ReactDOM.render(
       }}
     >
       <BrowserRouter>
+        <Navbar />
         <App />
       </BrowserRouter>
     </div>
