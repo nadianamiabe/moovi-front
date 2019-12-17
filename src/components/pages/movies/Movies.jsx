@@ -37,7 +37,7 @@ class Movies extends Component {
       
     return (
       <Container>
-        <Header as="h2">Filmes em Cartaz</Header>
+        <Header style={{paddingTop: '30px'}} as="h2">Filmes em Cartaz</Header>
         <Card.Group centered itemsPerRow={6}>
           {movieCards}
         </Card.Group>

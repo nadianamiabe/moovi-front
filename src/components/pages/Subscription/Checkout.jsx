@@ -39,7 +39,7 @@ class Checkout extends Component {
         {this.state.apiKey && (
           <StripeProvider apiKey={this.state.apiKey}>
             <Elements>
-              <CheckoutForm planId={planId} />
+              <CheckoutForm history={this.props.history} planId={planId} />
             </Elements>
           </StripeProvider>
         )}
