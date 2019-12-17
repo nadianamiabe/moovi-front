@@ -19,17 +19,16 @@ class Movies extends Component {
     });
   }
 
-
   render() {
     const { movies } = this.state;
     const movieCards = movies.map((movie) => {
       const poster = movie.poster_urls[0];
       return (
           <Card 
-            key={movie.tmdb_id}
+            key={movie._id}
             raised
             link
-            href={`/movies/${movie.tmdb_id}`}
+            href={`/movies/${movie._id}`}
             image={<Image style={{width: '100%'}} verticalAlign="middle" centered size="small" src={poster}/> } 
           />
       )
