@@ -1,8 +1,7 @@
 import React, { Component } from "react";
-import api from '../../../api/api';
-import VideoPlayer from './VideoPlayer';
+import api from "../../../api/api";
+import VideoPlayer from "./VideoPlayer";
 import "./MovieDetails.scss";
-
 
 class MovieDetails extends Component {
   state = {
@@ -10,7 +9,6 @@ class MovieDetails extends Component {
     omdbDetail: {},
     movieTrailerUrl: null,
     isLoading: true,
-
   };
 
   async componentDidMount() {
@@ -40,13 +38,15 @@ class MovieDetails extends Component {
   getTrailer = async () => {
     const { original_title, original_language } = this.state.movie;
     try {
-      const trailer = await api.get(`http://localhost:5000/api/movies/trailer`, 
+      const trailer = await api.get(
+        `http://localhost:5000/api/movies/trailer`,
         {
           params: {
             title: original_title,
-            language: original_language,
+            language: original_language
           }
-        });
+        }
+      );
       if (trailer.data) {
         const { videoId } = trailer.data.id;
         return `https://youtube.com/watch?v=${videoId}`;
@@ -54,7 +54,7 @@ class MovieDetails extends Component {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   render() {
     const { isLoading, movieTrailerUrl, movie, omdbDetail } = this.state;
