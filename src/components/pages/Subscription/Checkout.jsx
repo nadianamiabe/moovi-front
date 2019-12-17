@@ -3,6 +3,7 @@ import { Elements, StripeProvider } from "react-stripe-elements";
 import CheckoutForm from "./CheckoutForm";
 import api from '../../../api/api';
 import './Checkout.css';
+import { Redirect } from "react-router-dom";
 
 
 class Checkout extends Component {
@@ -32,6 +33,11 @@ class Checkout extends Component {
   }
 
   render() {
+    if (this.props.isSubscribed) {
+      return (
+        <Redirect to={'/movies/now-playing'} />
+      )
+    }
     const { planId }  = this.props.computedMatch.params;
     console.log(planId);
     return (
