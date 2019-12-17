@@ -9,17 +9,23 @@ import MovieDetails from "./components/pages/MovieDetails/MovieDetails";
 import Checkout from "./components/pages/Subscription/Checkout";
 import Home from "./components/pages/Home/Home";
 import { AllTheaters } from "./components/pages/AllTheaters/AllTheaters";
+import api from './api/api';
+
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
-      isUserAuthenticated: false
+      isUserAuthenticated: false,
+      isUserSubscribed: false,
     };
 
     const authToken = localStorage.getItem("loggedUser");
 
-    if (authToken) this.state.isUserAuthenticated = true;
+    if (authToken) {
+      this.state.isUserAuthenticated = true;
+      
+    }
   }
 
   authenticateUser = () => {
@@ -31,10 +37,22 @@ class App extends Component {
     this.setState({ isUserAuthenticated: false });
   };
 
-  render() {
-    const { isUserAuthenticated } = this.state;
+  componentDidMount() {
+    this.updateSubscribed();
+  }
 
-    return (
+  updateSubscribed = () => {
+      api.get('http://localhost:5000/api/payments/status')
+       .then((response) => {
+         this.setState({isUserSubscribed: response.data.status})
+       })
+       .catch(err => console.log(err));
+    }
+
+  render() {
+    const { isUserAuthenticated, isUserSubscribed } = this.state;
+
+      return (
       <div>
         {/* {isUserAuthenticated ? (
           <div>
@@ -67,24 +85,28 @@ class App extends Component {
             path="/movies/now-playing"
             component={Movies}
             isAuth={isUserAuthenticated}
+            isSubscribed={isUserSubscribed}
           />
           <PrivateRoute
             exact
             path="/subscribe/:planId"
             component={Checkout}
             isAuth={isUserAuthenticated}
+            isSubscribed={isUserSubscribed}
           />
           <PrivateRoute
             exact
             path="/movies/:id"
             component={MovieDetails}
             isAuth={isUserAuthenticated}
+            isSubscribed={isUserSubscribed}
           />
           <PrivateRoute
             exact
             path="/all-movie-theaters"
             component={AllTheaters}
             isAuth={isUserAuthenticated}
+            isSubscribed={isUserSubscribed}
           />
         </Switch>
       </div>

@@ -12,7 +12,7 @@ class MovieDetails extends Component {
     isLoading: true,
 
   };
-
+  
   async componentDidMount() {
     const data = await this.getDetails();
     if ( Object.keys(data).length > 1) {
