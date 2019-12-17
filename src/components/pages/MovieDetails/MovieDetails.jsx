@@ -8,27 +8,30 @@ class MovieDetails extends Component {
     movie: {},
     omdbDetail: {},
     movieTrailerUrl: null,
-    isLoading: true,
+    isLoading: true
   };
-  
+
   async componentDidMount() {
     const data = await this.getDetails();
-    if ( Object.keys(data).length > 1) {
-      const { movie , omdbDetail } = data;
+    if (Object.keys(data).length > 1) {
+      const { movie, omdbDetail } = data;
+
       this.setState({ movie, omdbDetail });
     } else {
       const { movie } = data;
-      this.setState({movie});
+      this.setState({ movie });
     }
     const url = await this.getTrailer();
     if (url) {
-      this.setState({movieTrailerUrl: url, isLoading: false});
+      this.setState({ movieTrailerUrl: url, isLoading: false });
     }
   }
   getDetails = async () => {
     const { id } = this.props.computedMatch.params;
     try {
       const res = await api.get(`http://localhost:5000/api/movies/${id}`);
+      console.log("banana", res.data);
+
       return res.data;
     } catch (error) {
       console.log(error);
@@ -60,10 +63,9 @@ class MovieDetails extends Component {
     const { isLoading, movieTrailerUrl, movie, omdbDetail } = this.state;
     return (
       <div>
-        {
-          !isLoading && 
+        {!isLoading && (
           <div>
-            <VideoPlayer url={movieTrailerUrl}/>
+            <VideoPlayer url={movieTrailerUrl} />
             <div className="movie_card">
               <div className="info_section">
                 <div className="movie_header">
@@ -74,10 +76,29 @@ class MovieDetails extends Component {
                   />
                   <h1>{movie.title}</h1>
                   <h4>
-                    {movie.release_date.slice(0,4)} {omdbDetail.Director}
-                  <span><img src="/images/imdb_icon.png" width="30" alt="imdb"></img>  : {omdbDetail.Ratings[0].Value}</span>
-                  <span><img src="/images/fresh.png" width="20" alt="rotten"></img></span>
-                  <span><img src="/images/metacritic.png" width="20" alt="imdb"></img></span>
+                    {movie.release_date.slice(0, 4)} {omdbDetail.Director}
+                    <span>
+                      <img
+                        src="/images/imdb_icon.png"
+                        width="30"
+                        alt="imdb"
+                      ></img>{" "}
+                      : {omdbDetail.Ratings[0].Value}
+                    </span>
+                    <span>
+                      <img
+                        src="/images/fresh.png"
+                        width="20"
+                        alt="rotten"
+                      ></img>
+                    </span>
+                    <span>
+                      <img
+                        src="/images/metacritic.png"
+                        width="20"
+                        alt="imdb"
+                      ></img>
+                    </span>
                   </h4>
                   <span className="minutes">{omdbDetail.Runtime}</span>
                   <p className="type">{omdbDetail.Genre}</p>
@@ -89,11 +110,10 @@ class MovieDetails extends Component {
               <div class="blur_back"></div>
             </div>
           </div>
-        }
+        )}
       </div>
-    )
+    );
   }
-     
 }
 
 export default MovieDetails;
