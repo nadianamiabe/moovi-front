@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import api from '../../../api/api';
 import { List, Avatar, Icon, Tag } from 'antd';
 import { Container } from './AllTheaters.styles'
+import { Link } from "react-router-dom";
 import MyGoogleComponent from '../../GoogleMaps/GoogleMaps'
 
 export class AllTheaters extends Component {
@@ -89,9 +90,10 @@ export class AllTheaters extends Component {
       <List.Item>
           <List.Item.Meta
             avatar={<Avatar shape="square" src="../../../../public/images/cinemark-full-logo.jpg" />}
-            title={<a href="https://ant.design">{item.movie}</a>}
+            title={<Link to="/movies/now-playing">{item.movie_name}</Link>}
             description={timesString}
           />
+          <p>{item.date}</p>
       </List.Item>
       )
     }
