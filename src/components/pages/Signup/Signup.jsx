@@ -6,11 +6,11 @@ import { Form, Input, Tooltip, Icon, Select, Button } from "antd";
 const { Option } = Select;
 
 class RegistrationForm extends Component {
-  // state = {
-  //   username: "",
-  //   password: "",
-  //   email: ""
-  // };
+  state = {
+    username: "",
+    password: "",
+    email: ""
+  };
 
   state = {
     confirmDirty: false

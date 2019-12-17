@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import api from "../../../api/api";
 import { Form, Icon, Input, Button } from "antd";
+import { Link } from "react-router-dom";
 
 class NormalLoginForm extends Component {
-  // state = {
-  //   username: '',
-  //   password: ''
-  // };
+  state = {
+    username: "",
+    password: ""
+  };
 
   handleChange = e => {
     const { name, value } = e.target;
@@ -89,7 +90,7 @@ class NormalLoginForm extends Component {
             >
               Log in
             </Button>{" "}
-            Ou <a href="">Se Cadastre!</a>
+            Ou <Link to="/users/signup">Se Cadastre!</Link>
           </Form.Item>
         </Form>
       </article>

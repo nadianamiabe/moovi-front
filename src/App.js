@@ -8,7 +8,6 @@ import Movies from "./components/pages/movies/Movies";
 import MovieDetails from "./components/pages/MovieDetails/MovieDetails";
 import Checkout from "./components/pages/Subscription/Checkout";
 import Home from "./components/pages/Home/Home";
-import Navbar from "./components/pages/Navbar/Navbar";
 import { AllTheaters } from "./components/pages/AllTheaters/AllTheaters";
 
 class App extends Component {
@@ -68,7 +67,6 @@ class App extends Component {
             isAuth={isUserAuthenticated}
           />
         </Switch>
-        <Navbar UserAuthenticated={this.props.isUserAuthenticated} />
       </div>
     );
   }

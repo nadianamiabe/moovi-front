@@ -1,5 +1,8 @@
 import React, { Component } from "react";
-import { Layout, Menu } from "antd";
+import { Layout, Menu, Button } from "antd";
+import Login from "../Login/Login";
+
+import { Link } from "react-router-dom";
 
 class navbar extends Component {
   logoutUser = () => {
@@ -9,9 +12,11 @@ class navbar extends Component {
 
   render() {
     const { Header } = Layout;
+    const verifyLogin = localStorage.length >= 1;
+
     return (
-      <Header>
-        {this.props.UserAuthenticated ? (
+      <div>
+        {verifyLogin ? (
           <Header
             style={{
               position: "fixed",
@@ -33,13 +38,18 @@ class navbar extends Component {
               }}
             >
               <Menu.Item key="0">
-                <a href="/movies/now-playing">Movies</a>
+                <Link to="/">Home</Link>
               </Menu.Item>
               <Menu.Item key="1">
-                <a href="/all-movie-theaters">Cinemas</a>
+                <Link to="/movies/now-playing">Movies</Link>
               </Menu.Item>
               <Menu.Item key="2">
-                <a onClick={this.logoutUser}>Logout</a>
+                <Link to="/all-movie-theaters">Cinemas</Link>
+              </Menu.Item>
+              <Menu.Item key="3">
+                <Link onClick={this.logoutUser} to="/">
+                  Logout
+                </Link>
               </Menu.Item>
             </Menu>
           </Header>
@@ -65,18 +75,18 @@ class navbar extends Component {
               }}
             >
               <Menu.Item key="0">
-                <a href="/">Home</a>
+                <Link to="/">Home</Link>
               </Menu.Item>
               <Menu.Item key="1">
-                <a href="/users/login">Entrar</a>
+                <Link to="/users/login">Entrar</Link>
               </Menu.Item>
               <Menu.Item key="2">
-                <a href="/users/signup"> Se Cadastre!</a>
+                <Link to="/users/signup"> Se Cadastre!</Link>
               </Menu.Item>
             </Menu>
           </Header>
         )}
-      </Header>
+      </div>
     );
   }
 }
