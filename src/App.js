@@ -18,6 +18,8 @@ class App extends Component {
     this.state = {
       isUserAuthenticated: false,
       isUserSubscribed: false,
+      movies: null,
+      allLoaded: false,
     };
 
     const authToken = localStorage.getItem("loggedUser");
@@ -39,6 +41,8 @@ class App extends Component {
 
   componentDidMount() {
     this.updateSubscribed();
+    this.getMovies();
+
   }
 
   updateSubscribed = () => {
@@ -49,10 +53,20 @@ class App extends Component {
        .catch(err => console.log(err));
     }
 
+   getMovies = () => {
+    api.get('http://localhost:5000/api/movies/now-playing')
+     .then((response) => {
+        console.log(response);
+        this.setState({movies: response.data.slice(), allLoaded: true});
+     })
+     .catch(err => console.log(err));
+   } 
+
   render() {
-    const { isUserAuthenticated, isUserSubscribed } = this.state;
+    const { isUserAuthenticated, isUserSubscribed, movies, allLoaded } = this.state;
 
       return (
+      allLoaded && (
       <div>
         {/* {isUserAuthenticated ? (
           <div>
@@ -86,6 +100,7 @@ class App extends Component {
             component={Movies}
             isAuth={isUserAuthenticated}
             isSubscribed={isUserSubscribed}
+            movies={movies}
           />
           <PrivateRoute
             exact
@@ -107,9 +122,11 @@ class App extends Component {
             component={AllTheaters}
             isAuth={isUserAuthenticated}
             isSubscribed={isUserSubscribed}
+            movies={movies}
           />
         </Switch>
       </div>
+      )
     );
   }
 }
