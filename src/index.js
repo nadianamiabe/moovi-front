@@ -1,34 +1,29 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import "./index.css";
-import "antd/dist/antd.css";
-import "tachyons";
-import App from "./App";
-import Navbar from "./components/pages/Navbar/Navbar";
-import * as serviceWorker from "./serviceWorker";
-import { BrowserRouter } from "react-router-dom";
-import { Layout } from "antd";
-
-const { Footer } = Layout;
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import 'antd/dist/antd.css';
+import 'tachyons';
+import App from './App';
+import * as serviceWorker from './serviceWorker';
+import { BrowserRouter } from 'react-router-dom';
+import { Layout } from 'antd';
 
 ReactDOM.render(
   <Layout>
     <div
       style={{
-        background: "#fff",
+        background: '#fff',
         padding: 0,
         minHeight: 380
       }}
     >
       <BrowserRouter>
-        <Navbar />
         <App />
       </BrowserRouter>
     </div>
-    <Footer style={{ textAlign: "center" }}>Created by Moovi ©2019</Footer>
   </Layout>,
 
-  document.getElementById("root")
+  document.getElementById('root')
 );
 
 // ReactDOM.render(

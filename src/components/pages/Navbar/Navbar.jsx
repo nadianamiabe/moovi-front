@@ -1,28 +1,28 @@
-import React, { Component } from "react";
-import { Layout, Menu, Button } from "antd";
-import Login from "../Login/Login";
+import React, { Component } from 'react';
+import { Layout, Menu, Button } from 'antd';
+import Login from '../Login/Login';
 
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 class navbar extends Component {
   logoutUser = () => {
-    localStorage.removeItem("loggedUser");
+    localStorage.removeItem('loggedUser');
     this.setState({ isUserAuthenticated: false });
   };
 
   render() {
     const { Header } = Layout;
-    const verifyLogin = localStorage.length >= 1;
-
+    const verifyLogin = localStorage.length >= 2;
+    console.log('aqui', localStorage);
     return (
       <div>
         {verifyLogin ? (
           <Header
             style={{
-              position: "fixed",
-              background: "#feb400",
+              position: 'fixed',
+              background: '#feb400',
               zIndex: 1,
-              width: "100%"
+              width: '100%'
             }}
           >
             <div className="logo" />
@@ -30,11 +30,11 @@ class navbar extends Component {
             <Menu
               theme="dark"
               mode="horizontal"
-              defaultSelectedKeys={["0"]}
+              defaultSelectedKeys={['0']}
               style={{
-                background: "#000000",
-                lineHeight: "64px",
-                float: "right"
+                background: '#000000',
+                lineHeight: '64px',
+                float: 'right'
               }}
             >
               <Menu.Item key="0">
@@ -56,10 +56,10 @@ class navbar extends Component {
         ) : (
           <Header
             style={{
-              position: "fixed",
-              background: "#feb400",
+              position: 'fixed',
+              background: '#feb400',
               zIndex: 1,
-              width: "100%"
+              width: '100%'
             }}
           >
             <div className="logo" />
@@ -67,11 +67,11 @@ class navbar extends Component {
             <Menu
               theme="dark"
               mode="horizontal"
-              defaultSelectedKeys={["0"]}
+              defaultSelectedKeys={['0']}
               style={{
-                background: "#000000",
-                lineHeight: "64px",
-                float: "right"
+                background: '#000000',
+                lineHeight: '64px',
+                float: 'right'
               }}
             >
               <Menu.Item key="0">
