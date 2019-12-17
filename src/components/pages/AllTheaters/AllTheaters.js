@@ -1,8 +1,9 @@
-import React, { Component } from "react";
-import api from "../../../api/api";
-import { List, Avatar, Icon, Tag } from "antd";
-import { Container } from "./AllTheaters.styles";
-import MyGoogleComponent from "../../GoogleMaps/GoogleMaps";
+import React, { Component } from 'react';
+import api from '../../../api/api';
+import { List, Avatar, Icon, Tag } from 'antd';
+import { Container } from './AllTheaters.styles';
+import { Link } from 'react-router-dom';
+import MyGoogleComponent from '../../GoogleMaps/GoogleMaps';
 
 export class AllTheaters extends Component {
   state = {
@@ -24,7 +25,7 @@ export class AllTheaters extends Component {
     const lat = this.state.currentPos.latitude;
     const lng = this.state.currentPos.longitude;
     const allData = await api({
-      method: "get",
+      method: 'get',
       url: `http://localhost:5000/api/movie-theater/all-places/lat/${lat}/lng/${lng}`
     });
     console.log(allData.data.allPlacesDB);
@@ -55,48 +56,81 @@ export class AllTheaters extends Component {
         console.log(resp.data);
       }
     );
-    console.log("current position is:", this.state.currentPos);
+    console.log('current position is:', this.state.currentPos);
   };
 
   getSessions = async id => {
     this.setState({ allSessions: [] });
     const { city } = this.state;
     const resp = await api({
-      method: "get",
+      method: 'get',
+
       url: `http://localhost:5000/api/sessions/${id}/${city}`
     });
     this.setState({ allSessions: resp.data });
-    console.log("this state allSessions", this.state.allSessions);
+    console.log('this state allSessions', this.state.allSessions);
+    console.log('this props movies', this.props.movies);
   };
 
-  getIdByName = async id => {
-    this.setState({ allSessions: [] });
-    const { city } = this.state;
-    const resp = await api({
-      method: "get",
-      url: `http://localhost:5000/api/sessions/${id}/${city}`
-    });
-    this.setState({ allSessions: resp.data });
-    console.log("this state allSessions", this.state.allSessions);
+  // getIdByName = async (id) => {
+  //   this.setState({ allSessions: [] })
+  //   const { city } = this.state
+  //   const resp = await api({
+  //     method: "get",
+  //     url: `http://localhost:5000/api/sessions/${id}/${city}`,
+  //   })
+  //   this.setState({ allSessions: resp.data })
+  //   console.log('this state allSessions', this.state.allSessions
+  //   )
+  // }
+
+  getIdByName = name => {
+    const errorPoster = './images/Logo-moovi.png';
+    const thisMovie = this.props.movies.find(movie => movie.title === name);
+    //   const thisMovie = this.props.movies.map(movie => {
+    //     if (movie.title.indexOf(name)) {
+    //       return [thisMovie._id, thisMovie.poster_urls[0]]
+    //     }
+    //     return [null, errorPoster]
+    //   })
+    //  }
+
+    // const promises = list.map(async (name) => {
+    //   const index = allNames.indexOf(name);
+    //   if (index === -1) {
+    //     const movies = await getMovieByName(name);
+    //     if (movies.length < 2) {
+    //       return movies[0];
+    //     }
+
+    if (thisMovie) {
+      return [thisMovie._id, thisMovie.poster_urls[0]];
+    }
+    return [null, errorPoster];
   };
 
   renderShowTime = item => {
-    let timesString = "";
+    let timesString = '';
     for (let i = 0; i < item.times.length; i += 1) {
       timesString += `${item.times[i]}  |  `;
     }
+    const movieInfo = this.getIdByName(item.movie_name);
+    console.log('movieInfo', movieInfo);
+    const movieIdAndImage = value => {
+      if (value) {
+        return <Link to={`/movies/${movieInfo[0]}`}>{item.movie_name}</Link>;
+      }
+      return <Link to="/movies/now-playing">{item.movie_name}</Link>;
+    };
+
     return (
       <List.Item>
         <List.Item.Meta
-          avatar={
-            <Avatar
-              shape="square"
-              src="../../../../public/images/cinemark-full-logo.jpg"
-            />
-          }
-          title={<a href="https://ant.design">{item.movie}</a>}
+          avatar={<Avatar shape="square" size={80} src={`${movieInfo[1]}`} />}
+          title={movieIdAndImage(movieInfo[0])}
           description={timesString}
         />
+        <p>{item.date}</p>
       </List.Item>
     );
   };
@@ -120,7 +154,7 @@ export class AllTheaters extends Component {
     ) : (
       <Icon
         type="loading"
-        style={{ height: "50px", marginTop: "30px", textAlign: "center" }}
+        style={{ height: '50px', marginTop: '30px', textAlign: 'center' }}
       />
     );
   }
