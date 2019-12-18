@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import api from "../../../api/api";
+import api from "../../../api";
 import VideoPlayer from "./VideoPlayer";
 import "./MovieDetails.scss";
 
@@ -29,7 +29,7 @@ class MovieDetails extends Component {
   getDetails = async () => {
     const { id } = this.props.computedMatch.params;
     try {
-      const res = await api.get(`http://localhost:5000/api/movies/${id}`);
+      const res = await api.get(`${process.env.REACT_APP_API_URL}/movies/${id}`);
       console.log("banana", res.data);
 
       return res.data;
@@ -42,7 +42,7 @@ class MovieDetails extends Component {
     const { original_title, original_language } = this.state.movie;
     try {
       const trailer = await api.get(
-        `http://localhost:5000/api/movies/trailer`,
+        `${process.env.REACT_APP_API_URL}/movies/trailer`,
         {
           params: {
             title: original_title,

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import api from "../../../api/api";
+import api from "../../../api";
 import { Form, Icon, Input, Button } from "antd";
 import { Link } from "react-router-dom";
 
@@ -23,7 +23,7 @@ class NormalLoginForm extends Component {
     });
 
     const response = await api({
-      url: "http://localhost:5000/api/users/login",
+      url: `${process.env.REACT_APP_API_URL}/users/login`,
       method: "POST",
       data: {
         username: this.state.username,

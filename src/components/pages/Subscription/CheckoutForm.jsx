@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import CardForm from './CardForm';
 import  { injectStripe } from 'react-stripe-elements';
-import api from '../../../api/api';
+import api from '../../../api';
 import { Form, Container, FormField, Button, Transition, Image, Header } from 'semantic-ui-react';
 
 class CheckoutForm extends Component {
@@ -76,7 +76,7 @@ class CheckoutForm extends Component {
       .then( async ({paymentMethod}) => {
         this.setState({processing: true, disabled: true });
         const customer = await api({
-          url: 'http://localhost:5000/api/payments/customer',
+          url: `${process.env.REACT_APP_API_URL}/payments/customer`,
           method: 'POST',
           data: {
             name,
@@ -87,7 +87,7 @@ class CheckoutForm extends Component {
         if (customer.status === 200) {
           const  { planId } = this.props;
           await api({
-            url: 'http://localhost:5000/api/payments/subscription',
+            url: `${process.env.REACT_APP_API_URL}/payments/subscription`,
             method: 'POST',
             data: { 
               planId,

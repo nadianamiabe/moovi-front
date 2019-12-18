@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import api from '../../../api/api';
+import api from '../../../api';
 import { List, Avatar, Icon, Tag } from 'antd';
 import { Container } from './AllTheaters.styles';
 import { Link } from 'react-router-dom';
@@ -38,7 +38,7 @@ const AllTheaters = ({ movies, getMovies }) => {
     const lng = currentPos.longitude;
     const allData = await api({
       method: 'get',
-      url: `http://localhost:5000/api/movie-theater/all-places/lat/${lat}/lng/${lng}`
+      url: `${process.env.REACT_APP_API_URL}/movie-theater/all-places/lat/${lat}/lng/${lng}`
     });
     console.log(allData.data.allPlacesDB);
     return allData;
@@ -75,14 +75,14 @@ const AllTheaters = ({ movies, getMovies }) => {
     setAllSessions([]);
     const resp = await api({
       method: 'get',
-      url: `http://localhost:5000/api/sessions/${id}/${city}`
+      url: `${process.env.REACT_APP_API_URL}/sessions/${id}/${city}`
     });
     setAllSessions(resp.data);
     console.log('this state allSessions', allSessions);
     console.log('this props movies', movies);
   };
 
-  //     url: `http://localhost:5000/api/sessions/${id}/${city}`
+  //     url: `${process.env.REACT_APP_API_URL}/sessions/${id}/${city}`
   //   })
   //   this.setState({ allSessions: resp.data });
   //   console.log('this state allSessions', this.state.allSessions);
@@ -94,7 +94,7 @@ const AllTheaters = ({ movies, getMovies }) => {
   //   const { city } = this.state
   //   const resp = await api({
   //     method: "get",
-  //     url: `http://localhost:5000/api/sessions/${id}/${city}`,
+  //     url: `${process.env.REACT_APP_API_URL}/sessions/${id}/${city}`,
   //   })
   //   this.setState({ allSessions: resp.data })
   //   console.log('this state allSessions', this.state.allSessions

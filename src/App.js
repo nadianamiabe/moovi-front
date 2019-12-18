@@ -12,7 +12,7 @@ import Home from './components/pages/Home/Home';
 import AllTheaters from './components/pages/AllTheaters/AllTheaters';
 import { Layout } from 'antd';
 
-import api from './api/api';
+import api from './api';
 
 class App extends Component {
   constructor() {
@@ -42,7 +42,7 @@ class App extends Component {
 
   updateSubscribed = () => {
     api
-      .get('http://localhost:5000/api/payments/status')
+      .get(`${process.env.REACT_APP_API_URL}/payments/status`)
       .then(response => {
         this.setState({ isUserSubscribed: response.data.status });
       })
@@ -51,7 +51,7 @@ class App extends Component {
 
   getMovies = () => {
     api
-      .get('http://localhost:5000/api/movies/now-playing')
+      .get(`${process.env.REACT_APP_API_URL}/movies/now-playing`)
       .then(response => {
         console.log(response);
         this.setState({ movies: response.data.slice(), allLoaded: true });

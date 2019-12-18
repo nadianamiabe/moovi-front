@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./Signup.css";
-import api from "../../../api/api";
+import api from "../../../api";
 import { Form, Input, Tooltip, Icon, Select, Button } from "antd";
 
 const { Option } = Select;
@@ -29,7 +29,7 @@ class RegistrationForm extends Component {
       }
     });
     const response = await api({
-      url: "http://localhost:5000/api/users/signup",
+      url: `${process.env.REACT_APP_API_URL}/users/signup`,
       method: "POST",
       data: {
         username: this.state.username,
