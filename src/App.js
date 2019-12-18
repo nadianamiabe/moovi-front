@@ -8,7 +8,7 @@ import Movies from "./components/pages/movies/Movies";
 import MovieDetails from "./components/pages/MovieDetails/MovieDetails";
 import Checkout from "./components/pages/Subscription/Checkout";
 import Home from "./components/pages/Home/Home";
-import { AllTheaters } from "./components/pages/AllTheaters/AllTheaters";
+import  AllTheaters from "./components/pages/AllTheaters/AllTheaters";
 import api from './api/api';
 
 
@@ -18,16 +18,14 @@ class App extends Component {
     this.state = {
       isUserAuthenticated: false,
       isUserSubscribed: false,
-      movies: null,
+      movies: [],
       allLoaded: false,
     };
 
     const authToken = localStorage.getItem("loggedUser");
+    console.log(authToken)
 
-    if (authToken) {
-      this.state.isUserAuthenticated = true;
-      
-    }
+    if (authToken)  this.state.isUserAuthenticated = true;
   }
 
   authenticateUser = () => {
@@ -38,12 +36,6 @@ class App extends Component {
     localStorage.removeItem("loggedUser");
     this.setState({ isUserAuthenticated: false });
   };
-
-  componentDidMount() {
-    this.updateSubscribed();
-    this.getMovies();
-
-  }
 
   updateSubscribed = () => {
       api.get('http://localhost:5000/api/payments/status')
@@ -66,23 +58,22 @@ class App extends Component {
     const { isUserAuthenticated, isUserSubscribed, movies, allLoaded } = this.state;
 
       return (
-      allLoaded && (
-      <div>
+        <div>
         {/* {isUserAuthenticated ? (
           <div>
-            <h1>Estou logado</h1>
-            <button onClick={this.logoutUser}>Logout</button>
-            <Link to="/movies/now-playing">Movies</Link>
+          <h1>Estou logado</h1>
+          <button onClick={this.logoutUser}>Logout</button>
+          <Link to="/movies/now-playing">Movies</Link>
           </div>
-        ) : (
-          <div>
+          ) : (
+            <div>
             <h1>Não estou logado</h1>
             <Link to="/users/login">Entrar</Link>
             <Link to="/users/signup">Se cadastre!</Link>
-          </div>
-        )} */}
-
-        {/* <Movies /> */}
+            </div>
+          )} */}
+          
+        {true && 
         <Switch>
           <Route exact path="/" component={Home} />
           <Route
@@ -93,7 +84,7 @@ class App extends Component {
             )}
           />
           <Route exact path="/users/signup" component={Signup} />
-          {/* <Route exact path="/movies/now-playing" component={Movies} /> */}
+          
           <PrivateRoute
             exact
             path="/movies/now-playing"
@@ -101,6 +92,8 @@ class App extends Component {
             isAuth={isUserAuthenticated}
             isSubscribed={isUserSubscribed}
             movies={movies}
+            getMovies={this.getMovies}
+            updateSubscribed={this.updateSubscribed}
           />
           <PrivateRoute
             exact
@@ -108,7 +101,7 @@ class App extends Component {
             component={Checkout}
             isAuth={isUserAuthenticated}
             isSubscribed={isUserSubscribed}
-          />
+          />  
           <PrivateRoute
             exact
             path="/movies/:id"
@@ -123,10 +116,11 @@ class App extends Component {
             isAuth={isUserAuthenticated}
             isSubscribed={isUserSubscribed}
             movies={movies}
+            getMovies={this.getMovies}
           />
-        </Switch>
+       </Switch>
+      }
       </div>
-      )
     );
   }
 }

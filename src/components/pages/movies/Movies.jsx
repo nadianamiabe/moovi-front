@@ -1,12 +1,25 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Image, Header, Card } from 'semantic-ui-react';
 
 
-const Movies = ({movies}) => {
-  console.log(movies);
+const Movies = ({movies, isSubscribed, getMovies, updateSubscribed}) => {
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await getMovies();
+      await updateSubscribed();
+
+      setIsLoaded(true);
+    };
+
+    fetchData();
+  }, []);
+
   const movieCards = movies.map((movie) => {
     const poster = movie.poster_urls[0];
-    return (
+    return isLoaded && (
+
         <Card 
           key={movie._id}
           raised

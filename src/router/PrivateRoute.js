@@ -1,7 +1,9 @@
 import React from "react";
 import { Redirect, Route } from "react-router-dom";
 
-export const PrivateRoute = ({ component: Component, isAuth, ...rest }) => (
+export const PrivateRoute = ({ component: Component, isAuth, ...rest }) => {
+  console.log(isAuth)
+  return (
   <Route
     render={props =>
       isAuth ? (
@@ -11,6 +13,6 @@ export const PrivateRoute = ({ component: Component, isAuth, ...rest }) => (
       )
     }
   />
-);
+)};
 
 export default PrivateRoute;
