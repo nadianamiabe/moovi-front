@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React  from 'react';
 import { Layout, Menu } from 'antd';
 
 
@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
 const navbar = (props) => {
     const { Header } = Layout;
-    const verifyLogin = this.props.isAuth;
+    const verifyLogin = props.isAuth;
     return (
       <div>
         {verifyLogin ? (
@@ -40,7 +40,7 @@ const navbar = (props) => {
                 <Link to="/all-movie-theaters">Cinemas</Link>
               </Menu.Item>
               <Menu.Item key="3">
-                <Link onClick={this.props.logoutUser} to="/">
+                <Link onClick={props.logoutUser} to="/">
                   Logout
                 </Link>
               </Menu.Item>
