@@ -1,19 +1,12 @@
 import React, { Component } from 'react';
-import { Layout, Menu, Button } from 'antd';
-import Login from '../Login/Login';
+import { Layout, Menu } from 'antd';
+
 
 import { Link } from 'react-router-dom';
 
-class navbar extends Component {
-  logoutUser = () => {
-    localStorage.removeItem('loggedUser');
-    this.setState({ isUserAuthenticated: false });
-  };
-
-  render() {
+const navbar = (props) => {
     const { Header } = Layout;
-    const verifyLogin = localStorage.length >= 2;
-    console.log('aqui', localStorage);
+    const verifyLogin = this.props.isAuth;
     return (
       <div>
         {verifyLogin ? (
@@ -47,7 +40,7 @@ class navbar extends Component {
                 <Link to="/all-movie-theaters">Cinemas</Link>
               </Menu.Item>
               <Menu.Item key="3">
-                <Link onClick={this.logoutUser} to="/">
+                <Link onClick={this.props.logoutUser} to="/">
                   Logout
                 </Link>
               </Menu.Item>
@@ -88,7 +81,7 @@ class navbar extends Component {
         )}
       </div>
     );
-  }
+  
 }
 
 export default navbar;

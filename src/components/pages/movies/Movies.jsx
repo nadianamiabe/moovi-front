@@ -14,7 +14,7 @@ const Movies = ({movies, isSubscribed, getMovies, updateSubscribed}) => {
     };
 
     fetchData();
-  }, []);
+  },[]);
 
   const movieCards = movies.map((movie) => {
     const poster = movie.poster_urls[0];

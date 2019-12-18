@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import api from '../../../api/api';
-import { List, Avatar, Icon, Tag } from 'antd';
+import { List, Avatar, Icon} from 'antd';
 import { Container } from './AllTheaters.styles';
 import { Link } from 'react-router-dom';
 import MyGoogleComponent from '../../GoogleMaps/GoogleMaps';
@@ -29,9 +29,10 @@ const AllTheaters = ({ movies, getMovies }) => {
     const fetchData = async () => {
       await getLocation();
       await getMovies();
+      console.log(movies)
     };
     fetchData();
-  }, []);
+  },[]);
 
   const getAllTheatersData = async () => {
     const lat = currentPos.latitude;
@@ -55,7 +56,7 @@ const AllTheaters = ({ movies, getMovies }) => {
       await fetchAllTheaters();
     };
     getTheaters();
-  }, [currentPos]);
+  },[currentPos]);
 
   const fetchAllTheaters = async () => {
     const resp = await getAllTheatersData();
@@ -82,7 +83,7 @@ const AllTheaters = ({ movies, getMovies }) => {
     console.log('this props movies', movies);
   };
 
-  //     url: `${process.env.REACT_APP_API_URL}/sessions/${id}/${city}`
+  //     url: `${http://localhost:5000/api}/sessions/${id}/${city}`
   //   })
   //   this.setState({ allSessions: resp.data });
   //   console.log('this state allSessions', this.state.allSessions);
@@ -94,7 +95,7 @@ const AllTheaters = ({ movies, getMovies }) => {
   //   const { city } = this.state
   //   const resp = await api({
   //     method: "get",
-  //     url: `${process.env.REACT_APP_API_URL}/sessions/${id}/${city}`,
+  //     url: `${http://localhost:5000/api}/sessions/${id}/${city}`,
   //   })
   //   this.setState({ allSessions: resp.data })
   //   console.log('this state allSessions', this.state.allSessions

@@ -77,7 +77,7 @@ class App extends Component {
             <Link to="/users/signup">Se cadastre!</Link>
             </div>
           )} */}
-        <Navbar />
+        <Navbar isAuth={isUserAuthenticated} logoutUser={this.logoutUser}/>
         <hr />
         <Switch>
           <Route exact path="/" component={Home} />

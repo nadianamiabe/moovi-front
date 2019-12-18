@@ -29,7 +29,7 @@ class RegistrationForm extends Component {
       }
     });
     const response = await api({
-      url: `${process.env.REACT_APP_API_URL}/users/signup`,
+      url: `${process.env.REACT_APP_API_URL}/users/signup`,
       method: "POST",
       data: {
         username: this.state.username,
