@@ -5,10 +5,12 @@ import { Container } from './AllTheaters.styles';
 import { Link } from 'react-router-dom';
 import MyGoogleComponent from '../../GoogleMaps/GoogleMaps';
 
-const AllTheaters = ({movies, getMovies}) =>  {
-
-  const [allTheaters, setAllTheaters] = useState([])
-  const [currentPos, setCurrentPos] = useState({latitude: null, longitude: null});
+const AllTheaters = ({ movies, getMovies }) => {
+  const [allTheaters, setAllTheaters] = useState([]);
+  const [currentPos, setCurrentPos] = useState({
+    latitude: null,
+    longitude: null
+  });
   const [city, setCity] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [allSessions, setAllSessions] = useState([]);
@@ -16,7 +18,7 @@ const AllTheaters = ({movies, getMovies}) =>  {
   //   allTheaters: [],
   //   currentPos: {
   //     latitude: null,
-  //     longitude: null, 
+  //     longitude: null,
   //   },
   //   city: null,
   //   isLoaded: false,
@@ -27,10 +29,9 @@ const AllTheaters = ({movies, getMovies}) =>  {
     const fetchData = async () => {
       await getLocation();
       await getMovies();
-
     };
     fetchData();
-  },[]);
+  }, []);
 
   const getAllTheatersData = async () => {
     const lat = currentPos.latitude;
@@ -45,7 +46,7 @@ const AllTheaters = ({movies, getMovies}) =>  {
 
   const getLocation = async () => {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(getCoordinates)
+      navigator.geolocation.getCurrentPosition(getCoordinates);
     }
   };
 
@@ -58,35 +59,35 @@ const AllTheaters = ({movies, getMovies}) =>  {
 
   const fetchAllTheaters = async () => {
     const resp = await getAllTheatersData();
-      setAllTheaters(resp.data.allPlacesDB);
-      setIsLoaded(true)
-      setCity(resp.data.userCity);
-    }
+    setAllTheaters(resp.data.allPlacesDB);
+    setIsLoaded(true);
+    setCity(resp.data.userCity);
+  };
 
-  const getCoordinates = (position) => {
+  const getCoordinates = position => {
     setCurrentPos({
-        latitude: position.coords.latitude,
-        longitude: position.coords.longitude,
-      })
-    };
+      latitude: position.coords.latitude,
+      longitude: position.coords.longitude
+    });
+  };
 
-  const getSessions = async (id) => {
-    setAllSessions([])
+  const getSessions = async id => {
+    setAllSessions([]);
     const resp = await api({
-      method: "get",
-      url: `http://localhost:5000/api/sessions/${id}/${city}`,
-    })
-    setAllSessions(resp.data);
-    console.log('this state allSessions', allSessions)
-    console.log('this props movies', movies)
-  }
-
+      method: 'get',
       url: `http://localhost:5000/api/sessions/${id}/${city}`
     });
-    this.setState({ allSessions: resp.data });
-    console.log('this state allSessions', this.state.allSessions);
-    console.log('this props movies', this.props.movies);
+    setAllSessions(resp.data);
+    console.log('this state allSessions', allSessions);
+    console.log('this props movies', movies);
   };
+
+  //     url: `http://localhost:5000/api/sessions/${id}/${city}`
+  //   })
+  //   this.setState({ allSessions: resp.data });
+  //   console.log('this state allSessions', this.state.allSessions);
+  //   console.log('this props movies', this.props.movies);
+  // }
 
   // getIdByName = async (id) => {
   //   this.setState({ allSessions: [] })
@@ -100,16 +101,16 @@ const AllTheaters = ({movies, getMovies}) =>  {
   //   )
   // }
 
-   const getIdByName = (name) => {
-    const errorPoster = './images/Logo-moovi.png' 
-    const thisMovie = movies.find(movie => movie.title === name)
-  //   const thisMovie = this.props.movies.map(movie => {
-  //     if (movie.title.indexOf(name)) {
-  //       return [thisMovie._id, thisMovie.poster_urls[0]]
-  //     }
-  //     return [null, errorPoster]
-  //   })
-  //  }
+  const getIdByName = name => {
+    const errorPoster = './images/Logo-moovi.png';
+    const thisMovie = movies.find(movie => movie.title === name);
+    //   const thisMovie = this.props.movies.map(movie => {
+    //     if (movie.title.indexOf(name)) {
+    //       return [thisMovie._id, thisMovie.poster_urls[0]]
+    //     }
+    //     return [null, errorPoster]
+    //   })
+    //  }
 
     // const promises = list.map(async (name) => {
     //   const index = allNames.indexOf(name);
@@ -125,14 +126,14 @@ const AllTheaters = ({movies, getMovies}) =>  {
     return [null, errorPoster];
   };
 
-  const renderShowTime = (item) => {
-    let timesString = ''
-    for (let i = 0; i < item.times.length; i += 1)  {
-      timesString += `${item.times[i]}  |  `
+  const renderShowTime = item => {
+    let timesString = '';
+    for (let i = 0; i < item.times.length; i += 1) {
+      timesString += `${item.times[i]}  |  `;
     }
-    const movieInfo = getIdByName(item.movie_name)
-    console.log('movieInfo', movieInfo)
-    const movieIdAndImage = (value) => {
+    const movieInfo = getIdByName(item.movie_name);
+    console.log('movieInfo', movieInfo);
+    const movieIdAndImage = value => {
       if (value) {
         return <Link to={`/movies/${movieInfo[0]}`}>{item.movie_name}</Link>;
       }
@@ -151,23 +152,25 @@ const AllTheaters = ({movies, getMovies}) =>  {
     );
   };
 
-  return (
-    isLoaded ? 
-      <Container>
-        <MyGoogleComponent 
-          currentPos={currentPos} 
-          list={allTheaters}
-          showTime={getSessions} />
-        <List
+  return isLoaded ? (
+    <Container>
+      <MyGoogleComponent
+        currentPos={currentPos}
+        list={allTheaters}
+        showTime={getSessions}
+      />
+      <List
         itemLayout="horizontal"
         dataSource={allSessions}
-        renderItem={item => (renderShowTime(item))}
-        />
-      </Container>
-            :
-      <Icon type="loading" style={{ height: '50px', marginTop: '30px', textAlign: 'center' }} />   
-  )
-        
-}
+        renderItem={item => renderShowTime(item)}
+      />
+    </Container>
+  ) : (
+    <Icon
+      type="loading"
+      style={{ height: '50px', marginTop: '30px', textAlign: 'center' }}
+    />
+  );
+};
 
 export default AllTheaters;
