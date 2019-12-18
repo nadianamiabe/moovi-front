@@ -9,8 +9,9 @@ import Movies from './components/pages/movies/Movies';
 import MovieDetails from './components/pages/MovieDetails/MovieDetails';
 import Checkout from './components/pages/Subscription/Checkout';
 import Home from './components/pages/Home/Home';
-import { AllTheaters } from './components/pages/AllTheaters/AllTheaters';
+import AllTheaters from './components/pages/AllTheaters/AllTheaters';
 import { Layout } from 'antd';
+
 import api from './api/api';
 
 class App extends Component {
@@ -19,15 +20,15 @@ class App extends Component {
     this.state = {
       isUserAuthenticated: false,
       isUserSubscribed: false,
-      movies: null,
+
+      movies: [],
       allLoaded: false
     };
 
     const authToken = localStorage.getItem('loggedUser');
+    console.log(authToken);
 
-    if (authToken) {
-      this.state.isUserAuthenticated = true;
-    }
+    if (authToken) this.state.isUserAuthenticated = true;
   }
 
   authenticateUser = () => {
@@ -38,11 +39,6 @@ class App extends Component {
     localStorage.removeItem('loggedUser');
     this.setState({ isUserAuthenticated: false });
   };
-
-  componentDidMount() {
-    this.updateSubscribed();
-    this.getMovies();
-  }
 
   updateSubscribed = () => {
     api
@@ -65,65 +61,72 @@ class App extends Component {
 
   render() {
     const { Footer } = Layout;
-    const {
-      isUserAuthenticated,
-      isUserSubscribed,
-      movies,
-      allLoaded
-    } = this.state;
+    const { isUserAuthenticated, isUserSubscribed, movies } = this.state;
 
     return (
-      allLoaded && (
-        <div>
-          <Navbar />
-          <hr />
-          <Switch>
-            <Route exact path="/" component={Home} />
-            <Route
-              exact
-              path="/users/login"
-              render={props => (
-                <Login {...props} authenticateUser={this.authenticateUser} />
-              )}
-            />
-            <Route exact path="/users/signup" component={Signup} />
-            {/* <Route exact path="/movies/now-playing" component={Movies} /> */}
-            <PrivateRoute
-              exact
-              path="/movies/now-playing"
-              component={Movies}
-              isAuth={isUserAuthenticated}
-              isSubscribed={isUserSubscribed}
-              movies={movies}
-            />
-            <PrivateRoute
-              exact
-              path="/subscribe/:planId"
-              component={Checkout}
-              isAuth={isUserAuthenticated}
-              isSubscribed={isUserSubscribed}
-            />
-            <PrivateRoute
-              exact
-              path="/movies/:id"
-              component={MovieDetails}
-              isAuth={isUserAuthenticated}
-              isSubscribed={isUserSubscribed}
-            />
-            <PrivateRoute
-              exact
-              path="/all-movie-theaters"
-              component={AllTheaters}
-              isAuth={isUserAuthenticated}
-              isSubscribed={isUserSubscribed}
-              movies={movies}
-            />
-          </Switch>
-          <Footer style={{ textAlign: 'center' }}>
-            Created by Moovi ©2019
-          </Footer>
-        </div>
-      )
+      <div>
+        {/* {isUserAuthenticated ? (
+          <div>
+          <h1>Estou logado</h1>
+          <button onClick={this.logoutUser}>Logout</button>
+          <Link to="/movies/now-playing">Movies</Link>
+          </div>
+          ) : (
+            <div>
+            <h1>Não estou logado</h1>
+            <Link to="/users/login">Entrar</Link>
+            <Link to="/users/signup">Se cadastre!</Link>
+            </div>
+          )} */}
+        <Navbar />
+        <hr />
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route
+            exact
+            path="/users/login"
+            render={props => (
+              <Login {...props} authenticateUser={this.authenticateUser} />
+            )}
+          />
+          <Route exact path="/users/signup" component={Signup} />
+
+          <PrivateRoute
+            exact
+            path="/movies/now-playing"
+            component={Movies}
+            isAuth={isUserAuthenticated}
+            isSubscribed={isUserSubscribed}
+            movies={movies}
+            getMovies={this.getMovies}
+            updateSubscribed={this.updateSubscribed}
+          />
+          <PrivateRoute
+            exact
+            path="/subscribe/:planId"
+            component={Checkout}
+            isAuth={isUserAuthenticated}
+            isSubscribed={isUserSubscribed}
+          />
+          <PrivateRoute
+            exact
+            path="/movies/:id"
+            component={MovieDetails}
+            isAuth={isUserAuthenticated}
+            isSubscribed={isUserSubscribed}
+          />
+          <PrivateRoute
+            exact
+            path="/all-movie-theaters"
+            component={AllTheaters}
+            isAuth={isUserAuthenticated}
+            isSubscribed={isUserSubscribed}
+            movies={movies}
+            getMovies={this.getMovies}
+          />
+        </Switch>
+        <Footer style={{ textAlign: 'center' }}>Created by Moovi ©2019</Footer>}
+      </div>
     );
   }
 }
