@@ -1,7 +1,7 @@
 import React,{ Component} from "react";
 import { Elements, StripeProvider } from "react-stripe-elements";
 import CheckoutForm from "./CheckoutForm";
-import api from '../../../api'
+import api from '../../../api/api'
 import './Checkout.css';
 import { Redirect } from "react-router-dom";
 

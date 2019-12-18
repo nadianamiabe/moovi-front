@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import CardForm from './CardForm';
 import  { injectStripe } from 'react-stripe-elements';
-import api from '../../../api';
+import api from '../../../api/api';
 import { Form, Container, FormField, Button, Transition, Image, Header } from 'semantic-ui-react';
 
 class CheckoutForm extends Component {

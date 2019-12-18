@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./Signup.css";
-import api from "../../../api";
+import api from "../../../api/api";
 import { Form, Input, Tooltip, Icon, Select, Button } from "antd";
 
 const { Option } = Select;

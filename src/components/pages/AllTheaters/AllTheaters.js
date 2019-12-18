@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import api from '../../../api';
+import api from '../../../api/api';
 import { List, Avatar, Icon, Tag } from 'antd';
 import { Container } from './AllTheaters.styles';
 import { Link } from 'react-router-dom';

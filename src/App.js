@@ -11,8 +11,7 @@ import Checkout from './components/pages/Subscription/Checkout';
 import Home from './components/pages/Home/Home';
 import AllTheaters from './components/pages/AllTheaters/AllTheaters';
 import { Layout } from 'antd';
-
-import api from './api';
+import api from './api/api';
 
 class App extends Component {
   constructor() {
