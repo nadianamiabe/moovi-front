@@ -4,6 +4,7 @@ import { List, Avatar, Icon} from 'antd';
 import { Container } from './AllTheaters.styles';
 import { Link } from 'react-router-dom';
 import MyGoogleComponent from '../../GoogleMaps/GoogleMaps';
+import { ListItem } from 'semantic-ui-react';
 
 const AllTheaters = ({ movies, getMovies }) => {
   const [allTheaters, setAllTheaters] = useState([]);
@@ -83,48 +84,18 @@ const AllTheaters = ({ movies, getMovies }) => {
     console.log('this props movies', movies);
   };
 
-  //     url: `${http://localhost:5000/api}/sessions/${id}/${city}`
-  //   })
-  //   this.setState({ allSessions: resp.data });
-  //   console.log('this state allSessions', this.state.allSessions);
-  //   console.log('this props movies', this.props.movies);
-  // }
 
-  // getIdByName = async (id) => {
-  //   this.setState({ allSessions: [] })
-  //   const { city } = this.state
-  //   const resp = await api({
-  //     method: "get",
-  //     url: `${http://localhost:5000/api}/sessions/${id}/${city}`,
-  //   })
-  //   this.setState({ allSessions: resp.data })
-  //   console.log('this state allSessions', this.state.allSessions
-  //   )
-  // }
-
-  const getIdByName = name => {
-    const errorPoster = './images/Logo-moovi.png';
-    const thisMovie = movies.find(movie => movie.title === name);
-    //   const thisMovie = this.props.movies.map(movie => {
-    //     if (movie.title.indexOf(name)) {
-    //       return [thisMovie._id, thisMovie.poster_urls[0]]
-    //     }
-    //     return [null, errorPoster]
-    //   })
-    //  }
-
-    // const promises = list.map(async (name) => {
-    //   const index = allNames.indexOf(name);
-    //   if (index === -1) {
-    //     const movies = await getMovieByName(name);
-    //     if (movies.length < 2) {
-    //       return movies[0];
-    //     }
-
-    if (thisMovie) {
-      return [thisMovie._id, thisMovie.poster_urls[0]];
+  const getMovieByName = (name) => {
+    const words = name.trim().split(' ');
+    for (let i = 0; i < words.length; i += 1) {
+      const found = movies.filter((movie) => movie.title.includes(words[i]))
+      if (found.length < 2 ){
+        return found;
+      } else {
+        return found.filter((movie) => movie.title.includes(words.join(' ')));
+      }  
     }
-    return [null, errorPoster];
+    return false
   };
 
   const renderShowTime = item => {
@@ -132,22 +103,23 @@ const AllTheaters = ({ movies, getMovies }) => {
     for (let i = 0; i < item.times.length; i += 1) {
       timesString += `${item.times[i]}  |  `;
     }
-    const movieInfo = getIdByName(item.movie_name);
-    console.log('movieInfo', movieInfo);
-    const movieIdAndImage = value => {
-      if (value) {
-        return <Link to={`/movies/${movieInfo[0]}`}>{item.movie_name}</Link>;
-      }
-      return <Link to="/movies/now-playing">{item.movie_name}</Link>;
-    };
+    const movieToShow = getMovieByName(item.movie_name);
+    console.log('movieInfo', movieToShow);
+    console.log('movie compared', item.movie_name);
 
     return (
       <List.Item>
-        <List.Item.Meta
-          avatar={<Avatar shape="square" size={80} src={`${movieInfo[1]}`} />}
-          title={movieIdAndImage(movieInfo[0])}
-          description={timesString}
-        />
+        { (movieToShow.length > 0) ? (
+          <List.Item.Meta
+            avatar={<Avatar shape="square" size={80} src={movieToShow[0].poster_urls[0]} />}
+            title={<Link to={`/movies/${movieToShow[0]._id}`}>{item.movie_name}</Link>}
+            description={timesString} />
+          ) : <List.Item.Meta
+                 avatar={<Avatar shape="square" size={80} src="/images/Logo-moovi.png"/>}
+                 title={<Link to="/movies/now-playing">{item.movie_name}</Link>}
+                 description={timesString}
+                 />
+          }
         <p>{item.date}</p>
       </List.Item>
     );
