@@ -92,6 +92,7 @@ class App extends Component {
             component={Checkout}
             isAuth={isUserAuthenticated}
             isSubscribed={isUserSubscribed}
+            updateSubscribed={this.updateSubscribed}
           />
           <PrivateRoute
             exact

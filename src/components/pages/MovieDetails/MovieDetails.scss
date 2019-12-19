@@ -9,6 +9,13 @@
   padding: 10px;
 }
 
+#youtube {
+  &:hover {
+    color: red;
+  }
+}
+
+
 
 
 .movie_card {
@@ -16,14 +23,19 @@
   font-size: 16px;
   font-weight: 400;
   position: relative;
-  width: 100%;
+  width: 80%;
   overflow: hidden;
-  margin-top: 60px;
+  margin: 60px auto 0 auto;
+
+
+
+  
 
   .ratings {
     display: flex;
-    align-items: baseline;
-    justify-content: flex-start;
+    width: 300px;
+    align-items: center;
+    justify-content: space-around;
     color: black;
     span {
       margin-left: 10px;
@@ -70,7 +82,7 @@
       }
     }
     .movie_desc {
-      padding: 40px;
+      padding: 50px;
       height: 50%;
       .text {
         color:black;

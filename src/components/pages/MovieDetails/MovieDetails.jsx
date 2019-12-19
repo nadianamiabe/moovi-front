@@ -16,16 +16,18 @@ class MovieDetails extends Component {
     if (Object.keys(data).length > 1) {
       const { movie, omdbDetail } = data;
 
-      this.setState({ movie, omdbDetail });
+      this.setState({ movie, omdbDetail});
     } else {
       const { movie } = data;
-      this.setState({ movie });
+      this.setState({ movie});
     }
     const url = await this.getTrailer();
     if (url) {
       this.setState({ movieTrailerUrl: url, isLoading: false });
     }
   }
+
+
   getDetails = async () => {
     const { id } = this.props.computedMatch.params;
     try {
@@ -58,8 +60,10 @@ class MovieDetails extends Component {
   };
 
   render() {
-    const { isLoading, movie, omdbDetail } = this.state;
+    const { isLoading, movie, omdbDetail, movieTrailerUrl } = this.state;
     return !isLoading && (
+          <div>
+            <VideoPlayer url={movieTrailerUrl} />
             <div className="movie_card">
               <div className="info_section">
                 <div className="movie_header">
@@ -71,6 +75,7 @@ class MovieDetails extends Component {
                   <h1>{movie.title}</h1>
                   <h3>{movie.release_date.slice(0, 4)}</h3>
                   <h4>{omdbDetail.Director}</h4>
+                  {this.state.omdbDetail.Ratings.length > 0 &&
                   <div className="ratings">
                     <span>
                       <img src="/images/imdb_icon.png" width="40" alt="imdb"></img>
@@ -79,18 +84,20 @@ class MovieDetails extends Component {
                     <span>
                       <img
                         src="/images/fresh.png"
-                        width="20"
+                        width="30"
                         alt="rotten"
                       ></img>
                     </span>
                     <span>
                       <img
                         src="/images/metacritic.png"
-                        width="20"
+                        width="30"
                         alt="imdb"
                       ></img>
                     </span>
+                    <span id="youtube"><i className="fab fa-youtube fa-3x"></i></span>
                   </div>
+                  }   
                   <span className="minutes">{omdbDetail.Runtime}</span>
                   <p className="type">{omdbDetail.Genre}</p>
                 </div>
@@ -99,6 +106,7 @@ class MovieDetails extends Component {
                 </div>
               </div>
             </div>
+          </div>
         );
       }
   }

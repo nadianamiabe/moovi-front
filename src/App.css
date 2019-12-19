@@ -24,3 +24,13 @@
 .App-link {
   color: #09d3ac;
 }
+
+.home-description {
+  font-family: 'Roboto', sans-serif !important;
+  text-align: center;
+}
+
+.home-description p {
+  font-size: 1.5em;
+}
+

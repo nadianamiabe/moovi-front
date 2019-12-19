@@ -162,7 +162,7 @@ class CheckoutForm extends Component {
   
   render() {
     return (
-    <Container style={{ position:'relative', width: '35%', margin: '0 auto', paddingTop: '50px'}}>
+    <Container style={{ position:'relative', width: '35%', margin: '0 auto', paddingTop: '100px'}}>
       {(!this.state.succeeded && this.state.error) && this.renderError()}
       {this.state.succeeded && this.renderSuccess()}
       {!this.state.succeeded && this.renderForm()}

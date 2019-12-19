@@ -17,6 +17,7 @@ class Checkout extends Component {
 
   async componentDidMount() {
     const key = await this.getKey();
+    await this.props.updateSubscribed();
       this.setState({
         apiKey: key
       });
