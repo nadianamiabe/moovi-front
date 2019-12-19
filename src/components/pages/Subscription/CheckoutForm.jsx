@@ -58,7 +58,6 @@ class CheckoutForm extends Component {
     // See our getElement documentation for more:
     // https://stripe.com/docs/stripe-js/reference#elements-get-element
     const cardElement = this.props.elements.getElement('card');
-    console.log(this.props);
     // From here we cal call createPaymentMethod to create a PaymentMethod
     // See our createPaymentMethod documentation for more:
     // https://stripe.com/docs/stripe-js/reference#stripe-create-payment-method
@@ -84,21 +83,19 @@ class CheckoutForm extends Component {
             payment_method: paymentMethod.id
           }
         });
-        if (customer.status === 200) {
-          const  { planId } = this.props;
-          await api({
-            url: `${process.env.REACT_APP_API_URL}/payments/subscription`,
-            method: 'POST',
-            data: { 
-              planId,
-            },
-          });
-          this.setState({processing: false, disabled: false, succeeded: true});
-        } else {
-          console.log(customer.data);
-        }
+        console.log('customer created', customer.id);
+        const  { planId } = this.props;
+        await api({
+          url: `${process.env.REACT_APP_API_URL}/payments/subscription`,
+          method: 'POST',
+          data: { 
+            planId,
+          },
+        });
+        console.log('subscription created')
+        this.setState({processing: false, disabled: false, succeeded: true});
       })
-      .catch(err => this.setState({error: err.message}));
+      .catch(err => this.setState({processing: false, disabled: false, error: err.message}));
   };
 
   renderSuccess = () => {
@@ -114,6 +111,20 @@ class CheckoutForm extends Component {
       <Header textAlign="center" as="h2">Subscription Created!</Header>
     </div>
     )
+  }
+
+  renderError = () => {
+      return (
+      <div>
+        <Transition 
+        animation="pulse" 
+        duration={1000} 
+        transitionOnMount>
+          <Image centered src="/images/error.svg" size="medium" />
+        </Transition>
+      <Header textAlign="center" as="h2">{this.state.error}</Header>
+      </div>
+      )
   }
 
 
@@ -143,7 +154,7 @@ class CheckoutForm extends Component {
         <FormField>
           <label>Credit Card</label>
           <CardForm />
-        </FormField>
+        </FormField>  
         <Button disabled={this.state.disabled} loading={this.state.processing} color="yellow">Confirm order</Button>
       </Form>
     )
@@ -152,6 +163,7 @@ class CheckoutForm extends Component {
   render() {
     return (
     <Container style={{ position:'relative', width: '35%', margin: '0 auto', paddingTop: '50px'}}>
+      {(!this.state.succeeded && this.state.error) && this.renderError()}
       {this.state.succeeded && this.renderSuccess()}
       {!this.state.succeeded && this.renderForm()}
     </Container>

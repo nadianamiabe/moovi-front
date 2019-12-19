@@ -30,8 +30,6 @@ class MovieDetails extends Component {
     const { id } = this.props.computedMatch.params;
     try {
       const res = await api.get(`${process.env.REACT_APP_API_URL}/movies/${id}`);
-      console.log("banana", res.data);
-
       return res.data;
     } catch (error) {
       console.log(error);
@@ -60,12 +58,8 @@ class MovieDetails extends Component {
   };
 
   render() {
-    const { isLoading, movieTrailerUrl, movie, omdbDetail } = this.state;
-    return (
-      <div>
-        {!isLoading && (
-          <div>
-            <VideoPlayer url={movieTrailerUrl} />
+    const { isLoading, movie, omdbDetail } = this.state;
+    return !isLoading && (
             <div className="movie_card">
               <div className="info_section">
                 <div className="movie_header">
@@ -75,14 +69,11 @@ class MovieDetails extends Component {
                     alt="movie poster"
                   />
                   <h1>{movie.title}</h1>
-                  <h4>
-                    {movie.release_date.slice(0, 4)} {omdbDetail.Director}
+                  <h3>{movie.release_date.slice(0, 4)}</h3>
+                  <h4>{omdbDetail.Director}</h4>
+                  <div className="ratings">
                     <span>
-                      <img
-                        src="/images/imdb_icon.png"
-                        width="30"
-                        alt="imdb"
-                      ></img>{" "}
+                      <img src="/images/imdb_icon.png" width="40" alt="imdb"></img>
                       : {omdbDetail.Ratings[0].Value}
                     </span>
                     <span>
@@ -99,7 +90,7 @@ class MovieDetails extends Component {
                         alt="imdb"
                       ></img>
                     </span>
-                  </h4>
+                  </div>
                   <span className="minutes">{omdbDetail.Runtime}</span>
                   <p className="type">{omdbDetail.Genre}</p>
                 </div>
@@ -107,13 +98,9 @@ class MovieDetails extends Component {
                   <p className="text">{movie.overview}</p>
                 </div>
               </div>
-              <div class="blur_back"></div>
             </div>
-          </div>
-        )}
-      </div>
-    );
+        );
+      }
   }
-}
 
 export default MovieDetails;

@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import "./Signup.css";
 import api from "../../../api/api";
-import { Form, Input, Tooltip, Icon, Select, Button } from "antd";
+import { Form, Input, Tooltip, Icon, Button } from "antd";
 
-const { Option } = Select;
 
 class RegistrationForm extends Component {
   state = {
@@ -44,8 +43,6 @@ class RegistrationForm extends Component {
         email: "roob@gmail.com",
         password: "123"
       });
-      console.log(this.props.history);
-
       this.props.history.push("/login");
     }
   };

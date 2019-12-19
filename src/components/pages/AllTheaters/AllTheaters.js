@@ -29,9 +29,7 @@ const AllTheaters = ({ movies, getMovies }) => {
   useEffect(() => {
     const fetchData = async () => {
       await getLocation();
-      console.log(currentPos);
       await getMovies();
-      console.log(movies)
     };
     fetchData();
   },[]);
@@ -44,7 +42,6 @@ const AllTheaters = ({ movies, getMovies }) => {
       method: 'get',
       url: `${process.env.REACT_APP_API_URL}/movie-theater/all-places/lat/${lat}/lng/${lng}`
     });
-    //console.log(allData.data.allPlacesDB);
     return allData;
   };
 
@@ -83,8 +80,6 @@ const AllTheaters = ({ movies, getMovies }) => {
       url: `${process.env.REACT_APP_API_URL}/sessions/${id}/${city}`
     });
     setAllSessions(resp.data);
-    //console.log('this state allSessions', allSessions);
-    //console.log('this props movies', movies);
   };
 
 
@@ -107,8 +102,6 @@ const AllTheaters = ({ movies, getMovies }) => {
       timesString += `${item.times[i]}  |  `;
     }
     const movieToShow = getMovieByName(item.movie_name);
-    //console.log('movieInfo', movieToShow);
-    //console.log('movie compared', item.movie_name);
 
     return (
       <List.Item>

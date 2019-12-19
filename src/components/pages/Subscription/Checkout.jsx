@@ -17,7 +17,6 @@ class Checkout extends Component {
 
   async componentDidMount() {
     const key = await this.getKey();
-    console.log(key);
       this.setState({
         apiKey: key
       });
@@ -39,7 +38,6 @@ class Checkout extends Component {
       )
     }
     const { planId }  = this.props.computedMatch.params;
-    console.log(planId);
     return (
       <div className="checkout">
         {this.state.apiKey && (

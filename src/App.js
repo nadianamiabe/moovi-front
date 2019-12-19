@@ -25,7 +25,6 @@ class App extends Component {
     };
 
     const authToken = localStorage.getItem('loggedUser');
-    console.log(authToken);
 
     if (authToken) this.state.isUserAuthenticated = true;
   }
@@ -52,7 +51,7 @@ class App extends Component {
     api
       .get(`${process.env.REACT_APP_API_URL}/movies/now-playing`)
       .then(response => {
-        console.log(response);
+        console.log('movies: ', response);
         this.setState({ movies: response.data.slice(), allLoaded: true });
       })
       .catch(err => console.log(err));
@@ -63,20 +62,7 @@ class App extends Component {
     const { isUserAuthenticated, isUserSubscribed, movies } = this.state;
 
     return (
-      <div>
-        {/* {isUserAuthenticated ? (
-          <div>
-          <h1>Estou logado</h1>
-          <button onClick={this.logoutUser}>Logout</button>
-          <Link to="/movies/now-playing">Movies</Link>
-          </div>
-          ) : (
-            <div>
-            <h1>Não estou logado</h1>
-            <Link to="/users/login">Entrar</Link>
-            <Link to="/users/signup">Se cadastre!</Link>
-            </div>
-          )} */}
+      <div style={{marginTop: '-7px'}}>
         <Navbar isAuth={isUserAuthenticated} logoutUser={this.logoutUser}/>
         <hr />
         <Switch>

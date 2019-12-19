@@ -9,7 +9,6 @@ const logout = () => {
 
 export default async err => {
   const { response } = err;
-  console.log(response.data);
   if (isUnauthorized(response) && isTokenExpired(response.data)) {
     logout();
     return err;

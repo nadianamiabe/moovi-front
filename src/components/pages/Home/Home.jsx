@@ -15,9 +15,9 @@ class Home extends Component {
     return (
       <div>
         <Carousel />
-        <article class="pa3 pa5-ns" style={{ paddingBottom: "20px" }}>
-          <h1 class="f3 f2-m f2-l">Moovi</h1>
-          <p class="lh-copy">
+        <article className="pa3 pa5-ns" style={{ paddingBottom: "20px" }}>
+          <h1 className="f3 f2-m f2-l">Moovi</h1>
+          <p className="lh-copy">
             Moovi é uma aplicação feita para quem gosta de ir ao cinema e
             gostaria de uma alternativa aos preços altos dos ingressos. Nós
             apresentamos uma plataforma completa e organizada dos filmes
