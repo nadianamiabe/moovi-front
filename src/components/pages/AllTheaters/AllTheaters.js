@@ -4,7 +4,7 @@ import { List, Avatar, Icon} from 'antd';
 import { Container } from './AllTheaters.styles';
 import { Link } from 'react-router-dom';
 import MyGoogleComponent from '../../GoogleMaps/GoogleMaps';
-import { ListItem } from 'semantic-ui-react';
+
 
 const AllTheaters = ({ movies, getMovies }) => {
   const [allTheaters, setAllTheaters] = useState([]);
@@ -29,6 +29,7 @@ const AllTheaters = ({ movies, getMovies }) => {
   useEffect(() => {
     const fetchData = async () => {
       await getLocation();
+      console.log(currentPos);
       await getMovies();
       console.log(movies)
     };
@@ -36,19 +37,28 @@ const AllTheaters = ({ movies, getMovies }) => {
   },[]);
 
   const getAllTheatersData = async () => {
+    console.log('entrou aqui com', currentPos);
     const lat = currentPos.latitude;
     const lng = currentPos.longitude;
     const allData = await api({
       method: 'get',
       url: `${process.env.REACT_APP_API_URL}/movie-theater/all-places/lat/${lat}/lng/${lng}`
     });
-    console.log(allData.data.allPlacesDB);
+    //console.log(allData.data.allPlacesDB);
     return allData;
   };
 
   const getLocation = async () => {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(getCoordinates);
+      console.log('entrou aqui ')
+
+      navigator.geolocation.getCurrentPosition((pos) => {
+        if(pos.latitude !== null && pos.longitude !== null)
+        setCurrentPos({
+          latitude: pos.coords.latitude,
+          longitude: pos.coords.longitude
+        });
+      });
     }
   };
 
@@ -66,22 +76,15 @@ const AllTheaters = ({ movies, getMovies }) => {
     setCity(resp.data.userCity);
   };
 
-  const getCoordinates = position => {
-    setCurrentPos({
-      latitude: position.coords.latitude,
-      longitude: position.coords.longitude
-    });
-  };
-
   const getSessions = async id => {
-    setAllSessions([]);
+    // setAllSessions([]);
     const resp = await api({
       method: 'get',
       url: `${process.env.REACT_APP_API_URL}/sessions/${id}/${city}`
     });
     setAllSessions(resp.data);
-    console.log('this state allSessions', allSessions);
-    console.log('this props movies', movies);
+    //console.log('this state allSessions', allSessions);
+    //console.log('this props movies', movies);
   };
 
 
@@ -104,8 +107,8 @@ const AllTheaters = ({ movies, getMovies }) => {
       timesString += `${item.times[i]}  |  `;
     }
     const movieToShow = getMovieByName(item.movie_name);
-    console.log('movieInfo', movieToShow);
-    console.log('movie compared', item.movie_name);
+    //console.log('movieInfo', movieToShow);
+    //console.log('movie compared', item.movie_name);
 
     return (
       <List.Item>
