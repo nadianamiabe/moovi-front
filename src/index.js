@@ -14,7 +14,8 @@ ReactDOM.render(
       style={{
         background: '#fff',
         padding: 0,
-        minHeight: 380
+        minHeight: '100vh',
+        position: "relative",
       }}
     >
       <BrowserRouter>
