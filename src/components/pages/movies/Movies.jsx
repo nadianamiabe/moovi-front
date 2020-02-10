@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Container, Image, Header, Card } from 'semantic-ui-react';
+import { Breakpoint, BreakpointProvider } from 'react-socks';
 
 
 const Movies = ({movies, isSubscribed, getMovies, updateSubscribed}) => {
@@ -31,12 +32,21 @@ const Movies = ({movies, isSubscribed, getMovies, updateSubscribed}) => {
   });  
 
   return (
-      <Container>
-        <Header style={{paddingTop: '30px'}} as="h2">Filmes em Cartaz</Header>
-        <Card.Group centered itemsPerRow={6}>
-          {movieCards}
-        </Card.Group>
+    <BreakpointProvider>
+      <Container style={{paddingBottom: '25px'}}>
+        <Header style={{paddingTop: '80px'}} as="h2">Filmes em Cartaz</Header>
+        <Breakpoint medium down >
+          <Card.Group centered itemsPerRow={4}>
+            {movieCards}
+          </Card.Group>
+        </Breakpoint>
+        <Breakpoint large up >
+          <Card.Group centered itemsPerRow={6}>
+            {movieCards}
+          </Card.Group>
+        </Breakpoint>
       </Container>
+    </BreakpointProvider>
         
     ) 
 };

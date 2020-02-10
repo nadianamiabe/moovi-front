@@ -59,8 +59,20 @@ class MovieDetails extends Component {
     }
   };
 
+
   render() {
     const { isLoading, movie, omdbDetail, movieTrailerUrl } = this.state;
+    var ratings;
+    if (!isLoading) {
+      ratings = omdbDetail.Ratings.map((rating,i) => {
+        return (
+          <span>
+            <img src={`/images/ratings-${i+1}.png`} width="40" alt="ratings"></img>
+            {rating.Value}
+          </span>
+        )
+      });
+    }
     return !isLoading && (
           <div>
             <VideoPlayer url={movieTrailerUrl} />
@@ -75,27 +87,9 @@ class MovieDetails extends Component {
                   <h1>{movie.title}</h1>
                   <h3>{movie.release_date.slice(0, 4)}</h3>
                   <h4>{omdbDetail.Director}</h4>
-                  {this.state.omdbDetail.Ratings.length > 0 &&
+                  {omdbDetail.Ratings.length > 0 &&
                   <div className="ratings">
-                    <span>
-                      <img src="/images/imdb_icon.png" width="40" alt="imdb"></img>
-                      : {omdbDetail.Ratings[0].Value}
-                    </span>
-                    <span>
-                      <img
-                        src="/images/fresh.png"
-                        width="30"
-                        alt="rotten"
-                      ></img>
-                    </span>
-                    <span>
-                      <img
-                        src="/images/metacritic.png"
-                        width="30"
-                        alt="imdb"
-                      ></img>
-                    </span>
-                    <span id="youtube"><i className="fab fa-youtube fa-3x"></i></span>
+                    {ratings}
                   </div>
                   }   
                   <span className="minutes">{omdbDetail.Runtime}</span>

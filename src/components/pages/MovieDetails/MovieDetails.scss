@@ -9,14 +9,6 @@
   padding: 10px;
 }
 
-#youtube {
-  &:hover {
-    color: red;
-  }
-}
-
-
-
 
 .movie_card {
   font-family: "Montserrat", helvetica, arial, sans-serif;
@@ -27,10 +19,7 @@
   overflow: hidden;
   margin: 60px auto 0 auto;
 
-
-
   
-
   .ratings {
     display: flex;
     width: 300px;
@@ -39,7 +28,9 @@
     color: black;
     span {
       margin-left: 10px;
-
+      img {
+        margin-right: 5px;
+      }
     }
   }
 

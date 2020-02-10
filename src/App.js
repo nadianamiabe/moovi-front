@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
-import Navbar from './components/pages/Navbar/Navbar';
+import NewNavbar from './components/pages/Navbar/NewNavbar';
 import Signup from './components/pages/Signup/Signup';
 import Login from './components/pages/Login/Login';
 import './App.css';
@@ -63,7 +63,7 @@ class App extends Component {
 
     return (
       <div style={{marginTop: '-7px'}}>
-        <Navbar isAuth={isUserAuthenticated} logoutUser={this.logoutUser}/>
+        <NewNavbar isAuth={isUserAuthenticated} logoutUser={this.logoutUser}/>
         <hr />
         <div style={{paddingBottom: '70px'}}>
           <Switch>
@@ -104,7 +104,7 @@ class App extends Component {
             />
             <PrivateRoute
               exact
-              path="/all-movie-theaters"
+              path="/theaters"
               component={AllTheaters}
               isAuth={isUserAuthenticated}
               isSubscribed={isUserSubscribed}

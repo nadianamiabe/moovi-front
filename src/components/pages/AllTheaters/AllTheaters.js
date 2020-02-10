@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense, lazy } from 'react';
 import api from '../../../api/api';
-import { List, Avatar, Icon} from 'antd';
+import { List, Avatar} from 'antd';
+import { Loader } from 'semantic-ui-react';
 import { Container } from './AllTheaters.styles';
 import { Link } from 'react-router-dom';
-import MyGoogleComponent from '../../GoogleMaps/GoogleMaps';
 
+const MyGoogleComponent = lazy(() => import('../../GoogleMaps/GoogleMaps'));
 
 const AllTheaters = ({ movies, getMovies }) => {
   const [allTheaters, setAllTheaters] = useState([]);
@@ -121,25 +122,22 @@ const AllTheaters = ({ movies, getMovies }) => {
     );
   };
 
-  return isLoaded ? (
+  return isLoaded && (
     <Container>
-      <MyGoogleComponent
-        currentPos={currentPos}
-        list={allTheaters}
-        showTime={getSessions}
-      />
+      <Suspense fallback={<Loader style={{marginTop: '30%'}} active size="large" inline="centered">Loading</Loader>}>
+        <MyGoogleComponent
+          currentPos={currentPos}
+          list={allTheaters}
+          showTime={getSessions}
+        />
+      </Suspense>
       <List
         itemLayout="horizontal"
         dataSource={allSessions}
         renderItem={item => renderShowTime(item)}
       />
     </Container>
-  ) : (
-    <Icon
-      type="loading"
-      style={{ height: '50px', marginTop: '30px', textAlign: 'center' }}
-    />
-  );
+  ) 
 };
 
 export default AllTheaters;

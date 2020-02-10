@@ -21,9 +21,11 @@
   padding: 0 0 0 50px;
 }
 
-.App-link {
-  color: #09d3ac;
+.ant-layout-footer {
+  color: rgba(255,255,255,0.77);
+  background: #283138;
 }
+
 
 .home-description {
   font-family: 'Roboto', sans-serif !important;
