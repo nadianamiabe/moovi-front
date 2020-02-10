@@ -4,29 +4,24 @@ import './index.css';
 import 'antd/dist/antd.css';
 import 'tachyons';
 import App from './App';
-import Navbar from './components/pages/Navbar/Navbar';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter } from 'react-router-dom';
 import { Layout } from 'antd';
 
-const { Footer } = Layout;
-
 ReactDOM.render(
   <Layout>
-    <Navbar />
     <div
       style={{
         background: '#fff',
         padding: 0,
-        minHeight: 380,
-        marginTop: 50
+        minHeight: '100vh',
+        position: "relative",
       }}
     >
       <BrowserRouter>
         <App />
       </BrowserRouter>
     </div>
-    <Footer style={{ textAlign: 'center' }}>Created by Moovi ©2019</Footer>
   </Layout>,
 
   document.getElementById('root')

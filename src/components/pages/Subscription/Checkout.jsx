@@ -1,7 +1,7 @@
-import React, { Component } from "react";
+import React,{ Component} from "react";
 import { Elements, StripeProvider } from "react-stripe-elements";
 import CheckoutForm from "./CheckoutForm";
-import api from '../../../api/api';
+import api from '../../../api/api'
 import './Checkout.css';
 import { Redirect } from "react-router-dom";
 
@@ -17,7 +17,7 @@ class Checkout extends Component {
 
   async componentDidMount() {
     const key = await this.getKey();
-    console.log(key);
+    await this.props.updateSubscribed();
       this.setState({
         apiKey: key
       });
@@ -25,7 +25,7 @@ class Checkout extends Component {
 
   getKey = async () => {
     const request = await api({
-      url: 'http://localhost:5000/api/payments/public-key',
+      url: `${process.env.REACT_APP_API_URL}/payments/public-key`,
       method: 'GET',
     });
     const { key } = request.data;
@@ -39,7 +39,6 @@ class Checkout extends Component {
       )
     }
     const { planId }  = this.props.computedMatch.params;
-    console.log(planId);
     return (
       <div className="checkout">
         {this.state.apiKey && (

@@ -1,121 +1,143 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect, Suspense, lazy } from 'react';
 import api from '../../../api/api';
-import { List, Avatar, Icon, Tag } from 'antd';
-import { Container } from './AllTheaters.styles'
-import { Link } from "react-router-dom";
-import MyGoogleComponent from '../../GoogleMaps/GoogleMaps'
+import { List, Avatar} from 'antd';
+import { Loader } from 'semantic-ui-react';
+import { Container } from './AllTheaters.styles';
+import { Link } from 'react-router-dom';
 
-export class AllTheaters extends Component {
-  state = {
-    allTheaters: [],
-    currentPos: {
-      latitude: null,
-      longitude: null, 
-    },
-    city: null,
-    isLoaded: false,
-    allSessions: [],
-  }
+const MyGoogleComponent = lazy(() => import('../../GoogleMaps/GoogleMaps'));
 
-  async componentDidMount() {
-    this.getLocation()
-  }
+const AllTheaters = ({ movies, getMovies }) => {
+  const [allTheaters, setAllTheaters] = useState([]);
+  const [currentPos, setCurrentPos] = useState({
+    latitude: null,
+    longitude: null
+  });
+  const [city, setCity] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [allSessions, setAllSessions] = useState([]);
+  // state = {
+  //   allTheaters: [],
+  //   currentPos: {
+  //     latitude: null,
+  //     longitude: null,
+  //   },
+  //   city: null,
+  //   isLoaded: false,
+  //   allSessions: [],
+  // }
 
-  getAllTheatersData = async () => {
-    const lat = this.state.currentPos.latitude;
-    const lng = this.state.currentPos.longitude;
+  useEffect(() => {
+    const fetchData = async () => {
+      await getLocation();
+      await getMovies();
+    };
+    fetchData();
+  },[]);
+
+  const getAllTheatersData = async () => {
+    console.log('entrou aqui com', currentPos);
+    const lat = currentPos.latitude;
+    const lng = currentPos.longitude;
     const allData = await api({
-      method: "get",
-      url: `http://localhost:5000/api/movie-theater/all-places/lat/${lat}/lng/${lng}`,
-    })
-    console.log(allData.data.allPlacesDB)
+      method: 'get',
+      url: `${process.env.REACT_APP_API_URL}/movie-theater/all-places/lat/${lat}/lng/${lng}`
+    });
     return allData;
-  }
+  };
 
-  getLocation = async () => {
+  const getLocation = async () => {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(this.getCoordinates)
+      console.log('entrou aqui ')
+
+      navigator.geolocation.getCurrentPosition((pos) => {
+        if(pos.latitude !== null && pos.longitude !== null)
+        setCurrentPos({
+          latitude: pos.coords.latitude,
+          longitude: pos.coords.longitude
+        });
+      });
     }
-  }
+  };
 
-  getCoordinates = (position) => {
-    this.setState({
-      currentPos: {
-        latitude: position.coords.latitude,
-        longitude: position.coords.longitude,
-      }
-    }, async () => {
-      const resp = await this.getAllTheatersData();
-      this.setState({
-        allTheaters: resp.data.allPlacesDB,
-        isLoaded: true,
-        city: resp.data.userCity,
-      })
-      console.log(resp.data)
-    })
-    console.log('current position is:',  this.state.currentPos)
-  }
+  useEffect(() => {
+    const getTheaters = async () => {
+      await fetchAllTheaters();
+    };
+    getTheaters();
+  },[currentPos]);
 
-  getSessions = async (id) => {
-    this.setState({ allSessions: [] })
-    const { city } = this.state
+  const fetchAllTheaters = async () => {
+    const resp = await getAllTheatersData();
+    setAllTheaters(resp.data.allPlacesDB);
+    setIsLoaded(true);
+    setCity(resp.data.userCity);
+  };
+
+  const getSessions = async id => {
+    // setAllSessions([]);
     const resp = await api({
-      method: "get",
-      url: `http://localhost:5000/api/sessions/${id}/${city}`,
-    })
-    this.setState({ allSessions: resp.data })
-    console.log('this state allSessions', this.state.allSessions
-    )
-  }
+      method: 'get',
+      url: `${process.env.REACT_APP_API_URL}/sessions/${id}/${city}`
+    });
+    setAllSessions(resp.data);
+  };
 
 
-  getIdByName = async (id) => {
-    this.setState({ allSessions: [] })
-    const { city } = this.state
-    const resp = await api({
-      method: "get",
-      url: `http://localhost:5000/api/sessions/${id}/${city}`,
-    })
-    this.setState({ allSessions: resp.data })
-    console.log('this state allSessions', this.state.allSessions
-    )
-  }
-
-  renderShowTime = (item) => {
-    let timesString = ''
-    for (let i = 0; i < item.times.length; i += 1)  {
-      timesString += `${item.times[i]}  |  `
+  const getMovieByName = (name) => {
+    const words = name.trim().split(' ');
+    for (let i = 0; i < words.length; i += 1) {
+      const found = movies.filter((movie) => movie.title.includes(words[i]))
+      if (found.length < 2 ){
+        return found;
+      } else {
+        return found.filter((movie) => movie.title.includes(words.join(' ')));
+      }  
     }
+    return false
+  };
+
+  const renderShowTime = item => {
+    let timesString = '';
+    for (let i = 0; i < item.times.length; i += 1) {
+      timesString += `${item.times[i]}  |  `;
+    }
+    const movieToShow = getMovieByName(item.movie_name);
+
     return (
       <List.Item>
+        { (movieToShow.length > 0) ? (
           <List.Item.Meta
-            avatar={<Avatar shape="square" src="../../../../public/images/cinemark-full-logo.jpg" />}
-            title={<Link to="/movies/now-playing">{item.movie_name}</Link>}
-            description={timesString}
-          />
-          <p>{item.date}</p>
+            avatar={<Avatar shape="square" size={80} src={movieToShow[0].poster_urls[0]} />}
+            title={<Link to={`/movies/${movieToShow[0]._id}`}>{item.movie_name}</Link>}
+            description={timesString} />
+          ) : <List.Item.Meta
+                 avatar={<Avatar shape="square" size={80} src="/images/Logo-moovi.png"/>}
+                 title={<Link to="/movies/now-playing">{item.movie_name}</Link>}
+                 description={timesString}
+                 />
+          }
+        <p>{item.date}</p>
       </List.Item>
-      )
-    }
+    );
+  };
 
-render() {
-  const listOfData =  this.state.allSessions;
-  const { isLoaded } = this.state 
-  return (
-    isLoaded ? 
-      <Container>
-        <MyGoogleComponent 
-          currentPos={this.state.currentPos} 
-          list={this.state.allTheaters}
-          showTime={this.getSessions} />
-        <List
-        itemLayout="horizontal"
-        dataSource={listOfData}
-        renderItem={item => (this.renderShowTime(item))}
+  return isLoaded && (
+    <Container>
+      <Suspense fallback={<Loader style={{marginTop: '30%'}} active size="large" inline="centered">Loading</Loader>}>
+        <MyGoogleComponent
+          currentPos={currentPos}
+          list={allTheaters}
+          showTime={getSessions}
         />
-      </Container>
-            :
-      <Icon type="loading" style={{ height: '50px', marginTop: '30px', textAlign: 'center' }} />   
-  )
-        }
-}
+      </Suspense>
+      <List
+        itemLayout="horizontal"
+        dataSource={allSessions}
+        renderItem={item => renderShowTime(item)}
+      />
+    </Container>
+  ) 
+};
+
+export default AllTheaters;

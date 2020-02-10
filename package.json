@@ -5,6 +5,7 @@
   "dependencies": {
     "antd": "^3.26.1",
     "axios": "^0.19.0",
+    "dotenv": "^8.2.0",
     "node-sass": "^4.13.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
@@ -12,6 +13,7 @@
     "react-player": "^1.14.2",
     "react-router-dom": "^5.1.2",
     "react-scripts": "^3.3.0",
+    "react-socks": "^2.1.0",
     "react-stripe-elements": "^6.0.1",
     "semantic-ui-react": "^0.88.2",
     "styled-components": "^4.4.1",
@@ -19,6 +21,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "build-dev": "dotenv -e .env.development react-scripts build",
+    "build-prod": "dotenv -e .env.production react-scripts build",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -48,6 +52,5 @@
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/namiabe/moovi-front/issues"
-  },
-  "homepage": "https://github.com/namiabe/moovi-front#readme"
+  }
 }

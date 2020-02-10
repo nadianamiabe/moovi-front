@@ -8,27 +8,30 @@ class MovieDetails extends Component {
     movie: {},
     omdbDetail: {},
     movieTrailerUrl: null,
-    isLoading: true,
+    isLoading: true
   };
-  
+
   async componentDidMount() {
     const data = await this.getDetails();
-    if ( Object.keys(data).length > 1) {
-      const { movie , omdbDetail } = data;
-      this.setState({ movie, omdbDetail });
+    if (Object.keys(data).length > 1) {
+      const { movie, omdbDetail } = data;
+
+      this.setState({ movie, omdbDetail});
     } else {
       const { movie } = data;
-      this.setState({movie});
+      this.setState({ movie});
     }
     const url = await this.getTrailer();
     if (url) {
-      this.setState({movieTrailerUrl: url, isLoading: false});
+      this.setState({ movieTrailerUrl: url, isLoading: false });
     }
   }
+
+
   getDetails = async () => {
     const { id } = this.props.computedMatch.params;
     try {
-      const res = await api.get(`http://localhost:5000/api/movies/${id}`);
+      const res = await api.get(`${process.env.REACT_APP_API_URL}/movies/${id}`);
       return res.data;
     } catch (error) {
       console.log(error);
@@ -39,7 +42,7 @@ class MovieDetails extends Component {
     const { original_title, original_language } = this.state.movie;
     try {
       const trailer = await api.get(
-        `http://localhost:5000/api/movies/trailer`,
+        `${process.env.REACT_APP_API_URL}/movies/trailer`,
         {
           params: {
             title: original_title,
@@ -56,14 +59,23 @@ class MovieDetails extends Component {
     }
   };
 
+
   render() {
-    const { isLoading, movieTrailerUrl, movie, omdbDetail } = this.state;
-    return (
-      <div>
-        {
-          !isLoading && 
+    const { isLoading, movie, omdbDetail, movieTrailerUrl } = this.state;
+    var ratings;
+    if (!isLoading) {
+      ratings = omdbDetail.Ratings.map((rating,i) => {
+        return (
+          <span>
+            <img src={`/images/ratings-${i+1}.png`} width="40" alt="ratings"></img>
+            {rating.Value}
+          </span>
+        )
+      });
+    }
+    return !isLoading && (
           <div>
-            <VideoPlayer url={movieTrailerUrl}/>
+            <VideoPlayer url={movieTrailerUrl} />
             <div className="movie_card">
               <div className="info_section">
                 <div className="movie_header">
@@ -73,12 +85,13 @@ class MovieDetails extends Component {
                     alt="movie poster"
                   />
                   <h1>{movie.title}</h1>
-                  <h4>
-                    {movie.release_date.slice(0,4)} {omdbDetail.Director}
-                  <span><img src="/images/imdb_icon.png" width="30" alt="imdb"></img>  : {omdbDetail.Ratings[0].Value}</span>
-                  <span><img src="/images/fresh.png" width="20" alt="rotten"></img></span>
-                  <span><img src="/images/metacritic.png" width="20" alt="imdb"></img></span>
-                  </h4>
+                  <h3>{movie.release_date.slice(0, 4)}</h3>
+                  <h4>{omdbDetail.Director}</h4>
+                  {omdbDetail.Ratings.length > 0 &&
+                  <div className="ratings">
+                    {ratings}
+                  </div>
+                  }   
                   <span className="minutes">{omdbDetail.Runtime}</span>
                   <p className="type">{omdbDetail.Genre}</p>
                 </div>
@@ -86,14 +99,10 @@ class MovieDetails extends Component {
                   <p className="text">{movie.overview}</p>
                 </div>
               </div>
-              <div class="blur_back"></div>
             </div>
           </div>
-        }
-      </div>
-    )
+        );
+      }
   }
-     
-}
 
 export default MovieDetails;

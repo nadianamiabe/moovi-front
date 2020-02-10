@@ -1,16 +1,15 @@
-import React, { Component } from 'react';
-import './Signup.css';
-import api from '../../../api/api';
-import { Form, Input, Tooltip, Icon, Select, Button } from 'antd';
+import React, { Component } from "react";
+import "./Signup.css";
+import api from "../../../api/api";
+import { Form, Input, Tooltip, Icon, Button } from "antd";
 
-const { Option } = Select;
 
 class RegistrationForm extends Component {
-  // state = {
-  //   username: "",
-  //   password: "",
-  //   email: ""
-  // };
+  state = {
+    username: "",
+    password: "",
+    email: ""
+  };
 
   state = {
     confirmDirty: false
@@ -25,12 +24,12 @@ class RegistrationForm extends Component {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values);
+        console.log("Received values of form: ", values);
       }
     });
     const response = await api({
-      url: 'http://localhost:5000/api/users/signup',
-      method: 'POST',
+      url: `${process.env.REACT_APP_API_URL}/users/signup`,
+      method: "POST",
       data: {
         username: this.state.username,
         email: this.state.email,
@@ -40,13 +39,11 @@ class RegistrationForm extends Component {
 
     if (response.status === 200) {
       this.setState({
-        username: 'roob',
-        email: 'roob@gmail.com',
-        password: '123'
+        username: "roob",
+        email: "roob@gmail.com",
+        password: "123"
       });
-      console.log(this.props.history);
-
-      this.props.history.push('/login');
+      this.props.history.push("/login");
     }
   };
 
@@ -57,8 +54,8 @@ class RegistrationForm extends Component {
 
   compareToFirstPassword = (rule, value, callback) => {
     const { form } = this.props;
-    if (value && value !== form.getFieldValue('password')) {
-      callback('Two passwords that you enter is inconsistent!');
+    if (value && value !== form.getFieldValue("password")) {
+      callback("Two passwords that you enter is inconsistent!");
     } else {
       callback();
     }
@@ -67,7 +64,7 @@ class RegistrationForm extends Component {
   validateToNextPassword = (rule, value, callback) => {
     const { form } = this.props;
     if (value && this.state.confirmDirty) {
-      form.validateFields(['confirm'], { force: true });
+      form.validateFields(["confirm"], { force: true });
     }
     callback();
   };
@@ -99,7 +96,7 @@ class RegistrationForm extends Component {
     };
 
     return (
-      <article class="mw6 center bg-white shadow-5 br3 pa3 pa4-ns mv3 ba b--black-10">
+      <article class="mw7 center bg-white shadow-5 br3 pa3 pa4-ns mv6 ba b--black-10">
         <Form {...formItemLayout} onSubmit={this.handleSubmit}>
           <Form.Item
             label={
@@ -111,36 +108,36 @@ class RegistrationForm extends Component {
               </span>
             }
           >
-            {getFieldDecorator('username', {
+            {getFieldDecorator("username", {
               rules: [
                 {
                   required: true,
-                  message: 'Please input your username!',
+                  message: "Please input your username!",
                   whitespace: true
                 }
               ]
             })(<Input name="username" onChange={this.handleChange} />)}
           </Form.Item>
           <Form.Item label="E-mail">
-            {getFieldDecorator('email', {
+            {getFieldDecorator("email", {
               rules: [
                 {
-                  type: 'email',
-                  message: 'The input is not valid E-mail!'
+                  type: "email",
+                  message: "The input is not valid E-mail!"
                 },
                 {
                   required: true,
-                  message: 'Please input your E-mail!'
+                  message: "Please input your E-mail!"
                 }
               ]
             })(<Input name="email" onChange={this.handleChange} />)}
           </Form.Item>
           <Form.Item label="Password" hasFeedback>
-            {getFieldDecorator('password', {
+            {getFieldDecorator("password", {
               rules: [
                 {
                   required: true,
-                  message: 'Please input your password!'
+                  message: "Please input your password!"
                 },
                 {
                   validator: this.validateToNextPassword
@@ -149,11 +146,11 @@ class RegistrationForm extends Component {
             })(<Input.Password name="password" onChange={this.handleChange} />)}
           </Form.Item>
           <Form.Item label="Confirm Password" hasFeedback>
-            {getFieldDecorator('confirm', {
+            {getFieldDecorator("confirm", {
               rules: [
                 {
                   required: true,
-                  message: 'Please confirm your password!'
+                  message: "Please confirm your password!"
                 },
                 {
                   validator: this.compareToFirstPassword
@@ -172,6 +169,6 @@ class RegistrationForm extends Component {
   }
 }
 
-const Signup = Form.create({ name: 'register' })(RegistrationForm);
+const Signup = Form.create({ name: "register" })(RegistrationForm);
 
 export default Signup;
