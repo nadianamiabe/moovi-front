@@ -5,6 +5,7 @@ import { Loader } from 'semantic-ui-react';
 import { Container } from './AllTheaters.styles';
 import { Link } from 'react-router-dom';
 
+
 const MyGoogleComponent = lazy(() => import('../../GoogleMaps/GoogleMaps'));
 
 const AllTheaters = ({ movies, getMovies }) => {
@@ -123,20 +124,20 @@ const AllTheaters = ({ movies, getMovies }) => {
   };
 
   return isLoaded && (
-    <Container>
-      <Suspense fallback={<Loader style={{marginTop: '30%'}} active size="large" inline="centered">Loading</Loader>}>
-        <MyGoogleComponent
-          currentPos={currentPos}
-          list={allTheaters}
-          showTime={getSessions}
+      <Container>
+        <Suspense fallback={<Loader style={{marginTop: '30%'}} active size="large" inline="centered">Loading</Loader>}>
+          <MyGoogleComponent
+            currentPos={currentPos}
+            list={allTheaters}
+            showTime={getSessions}
+          />
+        </Suspense>
+        <List
+          itemLayout="horizontal"
+          dataSource={allSessions}
+          renderItem={item => renderShowTime(item)}
         />
-      </Suspense>
-      <List
-        itemLayout="horizontal"
-        dataSource={allSessions}
-        renderItem={item => renderShowTime(item)}
-      />
-    </Container>
+      </Container>
   ) 
 };
 

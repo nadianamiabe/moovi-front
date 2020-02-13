@@ -9,18 +9,20 @@ export default class NewNavbar extends Component {
   
   render() {
     const { activeItem } = this.state;
-    const { isAuth, logoutUser } = this.props;
+    const {setVisible, isAuth, logoutUser } = this.props;
 
     return (
       <div>
         {isAuth ? (
-          <LoggedNavbar 
+          <LoggedNavbar
+            setVisible={setVisible}
             logoutUser={logoutUser} 
             handleItemClick={this.handleItemClick}
             activeItem={activeItem} 
           />
         ) : (
           <SignInNavbar 
+            setVisible={setVisible}
             activeItem={activeItem}
             handleItemClick={this.handleItemClick}
           />

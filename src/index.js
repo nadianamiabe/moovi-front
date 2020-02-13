@@ -6,10 +6,10 @@ import 'tachyons';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter } from 'react-router-dom';
-import { Layout } from 'antd';
+
 
 ReactDOM.render(
-  <Layout>
+ 
     <div
       style={{
         background: '#fff',
@@ -21,8 +21,8 @@ ReactDOM.render(
       <BrowserRouter>
         <App />
       </BrowserRouter>
-    </div>
-  </Layout>,
+    </div>,
+ 
 
   document.getElementById('root')
 );

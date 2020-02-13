@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Link } from 'react-router-dom';
+import {Menu, Sidebar, Segment} from 'semantic-ui-react';
 import NewNavbar from './components/pages/Navbar/NewNavbar';
 import Signup from './components/pages/Signup/Signup';
 import Login from './components/pages/Login/Login';
@@ -19,7 +20,7 @@ class App extends Component {
     this.state = {
       isUserAuthenticated: false,
       isUserSubscribed: false,
-
+      visible: false,
       movies: [],
       allLoaded: false
     };
@@ -35,8 +36,17 @@ class App extends Component {
 
   logoutUser = () => {
     localStorage.removeItem('loggedUser');
-    this.setState({ isUserAuthenticated: false });
+    if (this.state.visible) {
+      this.setState({visible: false,  isUserAuthenticated: false });
+    } else {
+      this.setState({isUserAuthenticated: false });
+    }
   };
+
+  setVisible = () => {
+    const{ visible } = this.state; 
+    this.setState({visible: !visible});
+  }
 
   updateSubscribed = () => {
     api
@@ -59,60 +69,89 @@ class App extends Component {
 
   render() {
     const { Footer } = Layout;
-    const { isUserAuthenticated, isUserSubscribed, movies } = this.state;
+    const {visible, isUserAuthenticated, isUserSubscribed, movies } = this.state;
 
     return (
-      <div style={{marginTop: '-7px'}}>
-        <NewNavbar isAuth={isUserAuthenticated} logoutUser={this.logoutUser}/>
-        <hr />
-        <div style={{paddingBottom: '70px'}}>
-          <Switch>
-            <Route exact path="/" component={Home} />
-            <Route
-              exact
-              path="/users/login"
-              render={props => (
-                <Login {...props} authenticateUser={this.authenticateUser} />
-              )}
-            />
-            <Route exact path="/users/signup" component={Signup} />
+      <div>
+        <NewNavbar setVisible={this.setVisible} isAuth={isUserAuthenticated} logoutUser={this.logoutUser}/>
+        <Sidebar.Pushable style={{margin: 0}} as={Segment}>
+          <Sidebar
+            style={{paddingTop: '80px'}}
+            direction="right"
+            as={Menu}
+            animation="overlay"
+            inverted
+            vertical
+            visible={visible}
+            width="thin"
+          >
+            <Menu.Item as={Link} to="/movies/now-playing" onClick={this.setVisible} >
+              Filmes
+            </Menu.Item>
+            <Menu.Item as={Link} to="/theaters" onClick={this.setVisible}>
+              Cinemas
+            </Menu.Item>
+            <Menu.Item as={Link} to="#" onClick={this.setVisible}>
+              Dashboard
+            </Menu.Item>
+            <Menu.Item as={Link} to="#" onClick={this.setVisible} >
+              My Account
+            </Menu.Item>
+            <Menu.Item as={Link} to="/" onClick={this.logoutUser}>
+              Logout
+            </Menu.Item>
+          </Sidebar>
+          <Sidebar.Pusher dimmed={visible}>
+            <div style={{paddingBottom: '70px'}}>
+              <Switch>
+                <Route exact path="/" component={Home} />
+                <Route
+                  exact
+                  path="/users/login"
+                  render={props => (
+                    <Login {...props} authenticateUser={this.authenticateUser} />
+                  )}
+                />
+                <Route exact path="/users/signup" component={Signup} />
 
-            <PrivateRoute
-              exact
-              path="/movies/now-playing"
-              component={Movies}
-              isAuth={isUserAuthenticated}
-              isSubscribed={isUserSubscribed}
-              movies={movies}
-              getMovies={this.getMovies}
-              updateSubscribed={this.updateSubscribed}
-            />
-            <PrivateRoute
-              exact
-              path="/subscribe/:planId"
-              component={Checkout}
-              isAuth={isUserAuthenticated}
-              isSubscribed={isUserSubscribed}
-              updateSubscribed={this.updateSubscribed}
-            />
-            <PrivateRoute
-              exact
-              path="/movies/:id"
-              component={MovieDetails}
-              isAuth={isUserAuthenticated}
-              isSubscribed={isUserSubscribed}
-            />
-            <PrivateRoute
-              exact
-              path="/theaters"
-              component={AllTheaters}
-              isAuth={isUserAuthenticated}
-              isSubscribed={isUserSubscribed}
-              movies={movies}
-              getMovies={this.getMovies}
-            />
-          </Switch>
-        </div>
+                <PrivateRoute
+                  exact
+                  path="/movies/now-playing"
+                  component={Movies}
+                  isAuth={isUserAuthenticated}
+                  isSubscribed={isUserSubscribed}
+                  movies={movies}
+                  getMovies={this.getMovies}
+                  updateSubscribed={this.updateSubscribed}
+                />
+                <PrivateRoute
+                  exact
+                  path="/subscribe/:planId"
+                  component={Checkout}
+                  isAuth={isUserAuthenticated}
+                  isSubscribed={isUserSubscribed}
+                  updateSubscribed={this.updateSubscribed}
+                />
+                <PrivateRoute
+                  exact
+                  path="/movies/:id"
+                  component={MovieDetails}
+                  isAuth={isUserAuthenticated}
+                  isSubscribed={isUserSubscribed}
+                />
+                <PrivateRoute
+                  exact
+                  path="/theaters"
+                  component={AllTheaters}
+                  isAuth={isUserAuthenticated}
+                  isSubscribed={isUserSubscribed}
+                  movies={movies}
+                  getMovies={this.getMovies}
+                />
+              </Switch>
+            </div>
+         </Sidebar.Pusher>
+        </Sidebar.Pushable>
         <Footer style={{ 
           position: "absolute", 
           bottom: 0, 

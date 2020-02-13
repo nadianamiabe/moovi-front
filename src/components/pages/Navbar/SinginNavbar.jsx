@@ -1,20 +1,15 @@
 import React from 'react';
-import { Button, Menu, Image } from 'semantic-ui-react'
+import { Button, Menu, Image} from 'semantic-ui-react'
 import { Link } from 'react-router-dom';
+
 
 const SignInNavbar = (props) => {
 
   return (
     <Menu borderless size='large' inverted fixed="top">
-      <Menu.Item header> 
-        <Image size="tiny" src="/images/Logo-moovi.png"  alt="logo"/>
+      <Menu.Item header as={Link} to="/">
+        <Image size="small" src="/images/Logo-moovi2.png"  alt="logo"/>
       </Menu.Item>
-      <Menu.Item
-        name='home'
-        active={props.activeItem === 'home'}
-        onClick={props.handleItemClick}
-        color="blue"
-      />
       <Menu.Menu borderless position="right">
         <Menu.Item>
           <Link to="/users/login">
@@ -25,7 +20,7 @@ const SignInNavbar = (props) => {
         </Menu.Item>
         <Menu.Item>
           <Link to="/users/signup">
-            <Button basic inverted color="blue" style={{marginLeft: '-20px'}}>
+            <Button basic inverted color="blue" style={{marginLeft: '-30px'}}>
               Signup
             </Button>
           </Link>

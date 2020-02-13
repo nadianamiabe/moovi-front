@@ -1,52 +1,73 @@
 import React from 'react';
-import { Button, Menu, Image } from 'semantic-ui-react'
+import { Menu, Image, Dropdown, Icon } from 'semantic-ui-react'
 import { Link } from 'react-router-dom';
+import {BreakpointProvider, Breakpoint} from 'react-socks';
 
-const LoggedNavbar = ({activeItem, handleItemClick, logoutUser}) => {
+
+const LoggedNavbar = ({setVisible, activeItem, handleItemClick, logoutUser}) => {
 
   return (
-    <Menu size='large' inverted fixed="top" borderless="true">
-      <Menu.Item header> 
-        <Image size="tiny" src="/images/Logo-moovi.png"  alt="logo"/>
-      </Menu.Item>
-      <Menu.Item
-        link
-        href="/"
-        name='home'
-        active={activeItem === 'home'}
-        onClick={handleItemClick}
-        color="blue"
-      />
-      <Menu.Item
-        link
-        href="/movies/now-playing"
-        name='movies'
-        active={activeItem === 'movies'}
-        onClick={handleItemClick}
-        color="blue"
-      />
-      <Menu.Item
-        link
-        href="/theaters"
-        name='cinemas'
-        active={activeItem === 'cinemas'}
-        onClick={handleItemClick}
-        color="blue"
-      />
-      <Menu.Menu borderless="true" position="right">
-        <Menu.Item>
-          <Link to="/">
-            <Button basic inverted color="blue" onClick={logoutUser}>
-              Logout
-            </Button>
-          </Link>
-        </Menu.Item>
-        <Menu.Item>
-          <Image avatar size="mini" src="/images/avatar.png" alt="user" />
-        </Menu.Item>
-      </Menu.Menu>
-    </Menu>
-
+    <BreakpointProvider>
+      <Breakpoint small up>
+        <Menu size="large" inverted fixed="top" borderless>
+          <Menu.Item header> 
+            <Image size="small" src="/images/Logo-moovi2.png"  alt="logo"/>
+          </Menu.Item>
+          <Menu.Item
+            as={Link}
+            to="/"
+            name='home'
+            active={activeItem === 'home'}
+            onClick={handleItemClick}
+            color="blue"
+          />
+          <Menu.Item
+            as={Link} 
+            to="/movies/now-playing"
+            name='movies'
+            active={activeItem === 'movies'}
+            onClick={handleItemClick}
+            color="blue"
+          />
+          <Menu.Item
+            as={Link}
+            to="/theaters"
+            name='cinemas'
+            active={activeItem === 'cinemas'}
+            onClick={handleItemClick}
+            color="blue"
+          />
+          <Menu.Menu position="right">
+            <Menu.Item 
+              as={Link}
+              to="#"
+              name = "dashboard" 
+              active={activeItem === 'dashboard'}
+              onClick={handleItemClick}
+              color="blue" 
+            />
+            <Menu.Item>
+              <Dropdown pointing="top right" icon={<Image avatar size="mini" src="/images/avatar.png" alt="user" />}>
+                <Dropdown.Menu>
+                  <Dropdown.Item as={Link} to="/" onClick={logoutUser} text="Logout" />
+                  <Dropdown.Item  text ="My Account" />
+                </Dropdown.Menu>
+              </Dropdown>
+            </Menu.Item>
+          </Menu.Menu>
+        </Menu>
+      </Breakpoint>
+      <Breakpoint small down>
+        <Menu sixe="large" bordeless inverted fixed="top">
+          <Menu.Item header as={Link} to="/"> 
+            <Image size="small" src="/images/Logo-moovi2.png"  alt="logo"/>
+          </Menu.Item>
+          <Menu.Menu position="right">
+            <Menu.Item onClick={setVisible} icon={<Icon name="bars" size="large" />}/>    
+          </Menu.Menu>
+        </Menu>
+      </Breakpoint>
+    </BreakpointProvider>
   )
 }
 

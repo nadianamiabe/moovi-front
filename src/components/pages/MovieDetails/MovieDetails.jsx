@@ -66,7 +66,7 @@ class MovieDetails extends Component {
     if (!isLoading) {
       ratings = omdbDetail.Ratings.map((rating,i) => {
         return (
-          <span>
+          <span key={i}>
             <img src={`/images/ratings-${i+1}.png`} width="40" alt="ratings"></img>
             {rating.Value}
           </span>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Container, Image, Header, Card } from 'semantic-ui-react';
 import { Breakpoint, BreakpointProvider } from 'react-socks';
+import { Link } from 'react-router-dom';
 
 
 const Movies = ({movies, isSubscribed, getMovies, updateSubscribed}) => {
@@ -22,10 +23,10 @@ const Movies = ({movies, isSubscribed, getMovies, updateSubscribed}) => {
     return isLoaded && (
 
         <Card 
+          as={Link}
+          to={`/movies/${movie._id}`}
           key={movie._id}
           raised
-          link
-          href={`/movies/${movie._id}`}
           image={<Image style={{width: '100%'}} verticalAlign="middle" centered size="small" src={poster}/> } 
         />
       )
