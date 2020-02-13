@@ -44,7 +44,7 @@ class NormalLoginForm extends Component {
   render() {
     const { getFieldDecorator } = this.props.form;
     return (
-      <article class="mw6 center bg-white shadow-5 br3 pa3 pa4-ns mv7 ba b--black-10">
+      <article className="mw6 center bg-white shadow-5 br3 pa3 pa4-ns mv7 ba b--black-10">
         <Form onSubmit={this.handleSubmit} className="login-form">
           <Form.Item>
             {getFieldDecorator("username", {

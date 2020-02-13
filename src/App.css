@@ -6,7 +6,7 @@
   height: 40vmin;
 }
 
-.App-header {
+/* .App-header {
   background-color: #282c34;
   min-height: 100vh;
   display: flex;
@@ -19,6 +19,10 @@
 
 .ant-layout-header {
   padding: 0 0 0 50px;
+} */
+
+.sidebar-item {
+  font-size: 1.4em;
 }
 
 .ant-layout-footer {

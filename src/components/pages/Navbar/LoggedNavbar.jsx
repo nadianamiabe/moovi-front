@@ -9,7 +9,7 @@ const LoggedNavbar = ({setVisible, activeItem, handleItemClick, logoutUser}) => 
   return (
     <BreakpointProvider>
       <Breakpoint small up>
-        <Menu size="large" inverted fixed="top" borderless>
+        <Menu size="large" inverted fixed="top" borderless="true">
           <Menu.Item header> 
             <Image size="small" src="/images/Logo-moovi2.png"  alt="logo"/>
           </Menu.Item>

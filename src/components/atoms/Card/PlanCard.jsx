@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const PlanCard = ({planId, title, description, price, planName}) => {
 
   return (
-    <Card raised style={{marginRight: '50px'}}>
+    <Card raised>
       <Card.Content textAlign="center">
         <Card.Header>{title}</Card.Header>
         <Card.Description>{description}</Card.Description>

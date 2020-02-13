@@ -96,7 +96,7 @@ class RegistrationForm extends Component {
     };
 
     return (
-      <article class="mw7 center bg-white shadow-5 br3 pa3 pa4-ns mv6 ba b--black-10">
+      <article className="mw7 center bg-white shadow-5 br3 pa3 pa4-ns mv6 ba b--black-10">
         <Form {...formItemLayout} onSubmit={this.handleSubmit}>
           <Form.Item
             label={

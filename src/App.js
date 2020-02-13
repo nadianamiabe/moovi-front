@@ -61,7 +61,6 @@ class App extends Component {
     api
       .get(`${process.env.REACT_APP_API_URL}/movies/now-playing`)
       .then(response => {
-        console.log('movies: ', response);
         this.setState({ movies: response.data.slice(), allLoaded: true });
       })
       .catch(err => console.log(err));
@@ -85,19 +84,19 @@ class App extends Component {
             visible={visible}
             width="thin"
           >
-            <Menu.Item as={Link} to="/movies/now-playing" onClick={this.setVisible} >
+            <Menu.Item className="sidebar-item" as={Link} to="/movies/now-playing" onClick={this.setVisible} >
               Filmes
             </Menu.Item>
-            <Menu.Item as={Link} to="/theaters" onClick={this.setVisible}>
+            <Menu.Item className="sidebar-item" as={Link} to="/theaters" onClick={this.setVisible}>
               Cinemas
             </Menu.Item>
-            <Menu.Item as={Link} to="#" onClick={this.setVisible}>
+            <Menu.Item className="sidebar-item" as={Link} to="#" onClick={this.setVisible}>
               Dashboard
             </Menu.Item>
-            <Menu.Item as={Link} to="#" onClick={this.setVisible} >
+            <Menu.Item className="sidebar-item" as={Link} to="#" onClick={this.setVisible} >
               My Account
             </Menu.Item>
-            <Menu.Item as={Link} to="/" onClick={this.logoutUser}>
+            <Menu.Item className="sidebar-item" as={Link} to="/" onClick={this.logoutUser}>
               Logout
             </Menu.Item>
           </Sidebar>

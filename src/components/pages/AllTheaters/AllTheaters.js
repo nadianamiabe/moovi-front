@@ -37,7 +37,6 @@ const AllTheaters = ({ movies, getMovies }) => {
   },[]);
 
   const getAllTheatersData = async () => {
-    console.log('entrou aqui com', currentPos);
     const lat = currentPos.latitude;
     const lng = currentPos.longitude;
     const allData = await api({
@@ -49,8 +48,6 @@ const AllTheaters = ({ movies, getMovies }) => {
 
   const getLocation = async () => {
     if (navigator.geolocation) {
-      console.log('entrou aqui ')
-
       navigator.geolocation.getCurrentPosition((pos) => {
         if(pos.latitude !== null && pos.longitude !== null)
         setCurrentPos({

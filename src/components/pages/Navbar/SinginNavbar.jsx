@@ -6,11 +6,11 @@ import { Link } from 'react-router-dom';
 const SignInNavbar = (props) => {
 
   return (
-    <Menu borderless size='large' inverted fixed="top">
+    <Menu borderless="true" size='large' inverted fixed="top">
       <Menu.Item header as={Link} to="/">
         <Image size="small" src="/images/Logo-moovi2.png"  alt="logo"/>
       </Menu.Item>
-      <Menu.Menu borderless position="right">
+      <Menu.Menu borderless="true" position="right">
         <Menu.Item>
           <Link to="/users/login">
             <Button basic inverted color="blue" >
